@@ -14,3 +14,8 @@ Ensemble de ressources de formation sur XML, Xquery et SynopsX.
 
 - [Bonnes pratiques XQuery](./xquery-bonnes-pratiques)
 - [Comparaison XQuery/XSLT](./xquery-vs-xslt)
+
+
+## Formations
+
+- [Formation du 15 septembre 2026](./formation-2026-09-15)

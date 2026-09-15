@@ -1,0 +1,1 @@
+doc("https://www.wikidata.org/w/api.php?action=wbgetclaims&amp;entity="||  "Q42" ||"&amp;property=P31&amp;format=xml")

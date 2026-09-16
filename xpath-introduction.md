@@ -4,11 +4,18 @@ since: 2026-09-04
 
 # XPath
 
+<dia-only state="centered">
+# 02 | Rafraîchissements XPath</br>
+ENS Lyon – septembre 2026
+</dia-only>
+
+<dia-both>
 >XPath is a language for addressing parts of an XML document, designed to be used by both XSLT and XPointer
 
 >The primary purpose of XPath is to address parts of an XML document.
 
 [XML Path Language 2.0, 2003](http://www.w3.org/TR/xpath20/)
+</dia-both>
 
 Comme le suggère cette citation, XPath a d’abord été conçu pour être utilisé au sein de langages dits hôtes ayant besoin d’identifier des portions précises dans un document. On utilise ainsi XPath avec XSLT pour sélectionner des nœuds, extraire des informations, ou encore effectuer des tests.
 
@@ -19,13 +26,16 @@ Plusieurs utilisations de XPath sont donc possibles
 - pour contrôler la qualité d’un document XML (exploration, analyse, vérification)
 - pour paralléliser des textes
 
+<dia-both>
 ## Historique
 
-- **1999** : première version du langage, immédiatement utilisée par **XSLT 1.0**
-- **2007** : seconde version du langage spécifiée en 2007
-- **2010** : support des langages **XSLT 2.0** et **XQuery 1.0** (s’appuie sur **XML Data Model** publié la même année)[^1]
-- **2014** : Version 3 publiée en 2014, puis 3.1 en 2017
+- 1999 : première version du langage, immédiatement utilisée par SLT 1.0
+- 2007 : seconde version du langage spécifiée en 2007
+- 2010 : support des langages XSLT 2.0 et XQuery 1.0 (s’appuie sur XML Data Model publié la même année)[^1]
+- 2014 : Version 3 publiée en 2014, puis 3.1 en 2017
 - Version 4 en cours
+
+</dia-both>
 
 La première version de XPath a été publiée en 1999 et fut immédiatement utilisée par XSLT 1.0.
 
@@ -41,8 +51,11 @@ Il s’agit d’un véritable langage fonctionnel typé. Ainsi, l’utilisateur 
 
 Après avoir examiné le modèle de données XML, nous aborderons les diverses expressions XPath et leur types, avant de nous concentrer sur des expressions servant à décrire des chemins pour sélectionner des ensembles de nœuds dans un arbre XML.
 
+<dia-both state="intertitre" bg="#1a1a2e">
 ## Les expressions XPath
+</dia-both>
 
+<dia-both>
 ### Les types d’expressions XPath
 
 XPath permet d’écrire des **expressions de chemin** (*path expressions*) qui permettent de sélectionner des fragments d’un document XML.
@@ -51,15 +64,19 @@ Mais les expressions XPath permettent aussi :
 - d’effectuer des **calculs** sur le contenu des nœuds sélectionnés,
 - d’écrire des **tests** pour sélectionner des nœuds,
 - etc.
+</dia-both>
 
+<dia-both>
 ### Évaluation d’une expression XPath
 
 En XPath 2.0, toutes les valeurs manipulées sont des **séquences** (*sequences*).
 
 - Une séquence est une collection ordonnée de zéro ou plusieurs items.
-
 - Un **item** appartenant à une séquence est soit un nœud soit une valeur atomique.
 
+</dia-both>
+
+<dia-both>
 ### Types XPath
 
 Une valeur atomique est une valeur appartenant à l’espace de valeur d’un **type atomique**.
@@ -67,13 +84,21 @@ Une valeur atomique est une valeur appartenant à l’espace de valeur d’un **
 XPath 2.0 reconnaît comme types atomiques les types atomiques primitifs de [XML Schema](http://www.w3.org/TR/xmlschema-2/), ainsi que plusieurs types qui en dérivent.
 
 La valeur d’une expression XPath 2.0 est toute séquence autorisée par le modèle de données.
+</dia-both>
 
+<dia-both>
 ![Hiérarchie des types XPath](https://www.w3.org/TR/xpath-31/types.jpg)
+</dia-both>
 
+<dia-both>
 ## Le modèle de données XML
 
 Le [modèle de données XML](https://www.w3.org/TR/xpath-datamodel-31/) (*XML Data Model*)
+</dia-both>
 
+<!-- @todo ajouter diagrammes -->
+
+<dia-both>
 ### Exemples
 
 - `12` est une **expression littérale** dénotant une **valeur atomique** de type `xs:integer`
@@ -84,10 +109,13 @@ Le [modèle de données XML](https://www.w3.org/TR/xpath-datamodel-31/) (*XML Da
 
 - `auteur = "Dupont"` est **expression booléenne** dont la valeur est de type `xs:boolean`
 
+</dia-both>
+
 (En programmation informatique, une **valeur littérale** est une valeur donnée explicitement dans le code source d’un programme)
 
 À partir de XPath 2.0, l’utilisation d’un système de types rigoureux a de nombreux avantages. Il offre notamment la possibilité de détecter des erreurs lors d’une phase d’analyse statique. Mais il peut poser des problèmes de compatibilité avec XPath 1.0, bien qu’ayant été conçu pour être compatible, les modèles de données présentent plusieurs différences notables.
 
+<dia-both>
 ### Les types définis par le XML Data Model (XDM)
 
 ```xquery
@@ -105,6 +133,7 @@ Le [modèle de données XML](https://www.w3.org/TR/xpath-datamodel-31/) (*XML Da
 ```xquery
 1, 2, 3 (: séquence :)
 ```
+</dia-both>
 
 Comme nous venons de le voir, XPath permet d’écrire différents types d’expressions
 
@@ -119,7 +148,7 @@ Comme nous venons de le voir, XPath permet d’écrire différents types d’exp
 
 Parmi ces expressions, les expressions de chemins (`path expressions`) représentent le cœur de ce langage dans la mesure où elles permettent de **sélectionner une séquence de nœuds** en spécifiant un chemin à suivre à partir d’un point de départ (la racine ou un autre nœud de la structure)
 
-
+<dia-both>
 ## Les expressions de chemins
 
 Pour comprendre cette notion de chemin, on peut faire l’analogie avec d’autres structures hiérarchiques comme les systèmes de fichiers Unix où il est nécessaire de pouvoir noter le chemin menant à un fichier ou un groupe de fichiers spécifiques.
@@ -136,7 +165,8 @@ Chemin relatif
 	formENC2014/xpath01.tei.xml
 ```
 
-Par exemple, le système de fichiers, dont la racine a pour nom /.
+Par exemple, le système de fichiers, dont la racine a pour nom `/`.
+</dia-both>
 
 Dans ce système, un fichier est désigné par un nom qui correspond au chemin (*path*) que l’on doit suivre dans la structure pour atteindre ce fichier.
 
@@ -155,11 +185,14 @@ Cette analogie avec les systèmes de fichier présente cependant des limites.
 
 C’est maintenant ce que nous allons voir !
 
+<dia-both>
 ## Les axes XPath
 
 Sérialisation arborescente de [phares.tei.xml](./exemplesTEI/phares.tei.xml)
 
-![solution](../hnu6053/md/images/diagram01.svg)
+![solution](./images/diagram01.svg)
+
+</dia-both>
 
 Avant tout, il est très important de comprendre que pour qu’une expression XPath puisse opérer sur un document XML, ce dernier doit au préalable être traduit en une instance de ce modèle de donnée.
 
@@ -185,6 +218,7 @@ Par exemple, depuis le nœud `<lg>` au milieu de la diapositive qui nous sert de
 - le nœud frère `<lg>` qui le précède, on utilise alors l’axe preceding-sibling
 - etc.
 
+<dia-both>
 ## Notation XPath
 
 ### Notation des étapes d’un chemin XPath
@@ -207,32 +241,39 @@ pour un chemin relatif
 ```xpath
   étape1/étape2/.../étapeN
 ```
+</dia-both>
 
+<dia-both>
 ## Structure d’une étape de chemin XPath
 
 Pour chaque étape, on peut préciser :
 
-- dans quelle direction on souhaite se déplacer (.red[axis specifier])
+- dans quelle direction on souhaite se déplacer (*axis specifier*)
 
-- quels nœuds ou types de nœuds particuliers (éléments, attributs, commentaires, etc.) on souhaite identifier sur cet axe (.red[test node])
+- quels nœuds ou types de nœuds particuliers (éléments, attributs, commentaires, etc.) on souhaite identifier sur cet axe (*test node*)
 
-- éventuellement, un ou plusieurs .red[prédicats] qui permettent de filtrer l’ensemble de nœud désigné par les indications précédentes
+- éventuellement, un ou plusieurs *prédicats* qui permettent de filtrer l’ensemble de nœud désigné par les indications précédentes
 
 Ces prédicats prennent la forme d’une expression booléenne
+</dia-both>
 
+<dia-both>
 ### Forme d’une expression XPath :
 
 ```xpath
 axe::testNode[prédicat]/.../axe::testNode[prédicat][...]
 ```
 
+</dia-both>
+
+<dia-both>
 ## Notation des axes (*axis specifier*)
 
 Ces axes sont introduits en écrivant le nom de l’axe suivi du délimiteur `::`
 ```xpath
 child::
-
 ```
+
 sert par exemple à noter l’axe fils
 
 ```xpath
@@ -241,6 +282,9 @@ ancestor::
 
 sert par exemple à noter l’axe des ancêtres
 
+</dia-both>
+
+<dia-both>
 ## Test du type de nœuds à sélectionner (*node test*)
 
 Cette composante d’une étape sert à préciser quels nœuds ou types de nœuds particuliers on souhaite identifier sur un axe.
@@ -253,6 +297,9 @@ On peut soit indiquer un nom précis (`lg`, `div`), soit être plus générique 
 
 - `*` sélectionne un nœud de nom quelconque de type `element` sur un axe permettant de sélectionner des éléments, ou de type attribut sur l’axe attribute, ou de type espace de nom sur l’axe namespace
 
+</dia-both>
+
+<dia-both>
 ## Exemples
 
 En conséquence que signifient les expressions suivantes ?
@@ -262,7 +309,9 @@ En conséquence que signifient les expressions suivantes ?
 child::l
 div/attribute::type
 ```
+</dia-both>
 
+<dia-both>
 ## Raccourcis
 
 En pratique, on peut utiliser une notation abrégée qui permet d’alléger l’écriture des chemins.
@@ -276,6 +325,9 @@ En pratique, on peut utiliser une notation abrégée qui permet d’alléger l�
 -`/`, désigne le nœud document au début d’une expression
 - `*` sélectionne un nœud de nom quelconque de type `element` sur un axe permettant de sélectionner des éléments, ou de type `attribut` sur l’axe `attribute`, ou de type espace de nom sur l’axe `namespace`
 
+</dia-both>
+
+<dia-both>
 ## Exercices
 
 En conséquence, que signifient les expressions suivantes ?
@@ -289,23 +341,21 @@ div/*/@*
 
 //*
 ```
+</dia-both>
 
 ## Les axes
 
 XPath distingue ainsi plusieurs catégories d’axes de déplacement dans l’abre XML.
 
+<dia-both>
 ### Les axes de type *forward axes*
 
 axe | signification | types de noeud
 :--|:--|:--
 `child`                 | fils du nœud contexte| `element`, `text`, `comment`, `processing instruction`
 `descendant`            | fils, petits-fils et tous les descendants du nœud contexte| `element`, `text`, `comment`, `processing instruction`
-`descendant-or-self`    | qui descendent du nœud contexte ainsi que le nœud contexte lui-même| `element`, `text`, `comment`, `processing-instruction`
-`following-sibling`     | frères droits du nœud contexte.| `element`, `text`, `comment`, `processing instruction`
-`following`             | situés après le nœud contexte (à l’exception des descendants)| `element`, `texte`, `comment`, `processing instruction`
-`attribute`             | attribut du nœud contexte|
-`namespace`             | espace de nom du noeud contexte|
-`processing instruction`| qui descendent du nœud contexte|
+
+</dia-both>
 
 - `child` : sélectionne tous les enfants du nœud contexte, dans l’ordre du document.
 L’axe child ne sélectionne rien pour tous les nœuds qui ne sont ni un nœud document ni un nœud élément.
@@ -314,20 +364,44 @@ Rappel : les enfants d’un nœud élément n’incluent pas ses attributs ou e
 - `descendant` : sélectionne tous les enfants du nœuds contexte et leurs enfants, et ainsi de suite récursivement dans l’ordre du document.
 Si le nœud contexte est un élément, l’axe descendant contient tous les nœuds texte, élément, commentaire, et instruction de traitement qui apparaissent dans le document source à l’intérieur des balises de cet élément.
 
+<dia-both>
+### Les axes de type *forward axes*
+
+axe | signification | types de noeud
+:--|:--|:--
+`descendant-or-self`    | qui descendent du nœud contexte ainsi que le nœud contexte lui-même| `element`, `text`, `comment`, `processing-instruction`
+`following`             | situés après le nœud contexte (à l’exception des descendants)| `element`, `texte`, `comment`, `processing instruction`
+`following-sibling`     | frères droits du nœud contexte.| `element`, `text`, `comment`, `processing instruction`
+
+</dia-both>
+
+
+
 - `descendant-of-self` : idem, à la différence que le premier nœud sélectionné est le nœud contexte.
 
 - following` : sélectionne tous les nœuds qui apparaissent après le nœud contexte dans l’ordre du document, en excluant les descendants du nœuds contexte.
+
 Si le nœud d’origine est un nœud element, l’axe comporte tous les nœuds texte, élément, commentaire, et instruction de traitement du document qui débute après la balise fermente du nœud contexte.
 L’axe following ne contiendra jamais de nœuds attributs ou d’espace de noms.
 
 - `following-sibling` : Sélectionne tous les nœuds qui suivent le nœud contexte dans l’ordre du document et qui sont les enfants du même nœud parent.
 Si le nœud contexte est un nœud racine, un nœud attribut, ou espace de noms, alors l’axe following-sibling sera toujours vide.
 
+<dia-both>
+axe | signification | types de noeud
+:--|:--|:--
+`attribute`             | attribut du nœud contexte|
+`namespace`             | espace de nom du noeud contexte|
+`processing instruction`| qui descendent du nœud contexte|
+
+</dia-both>
+
 - `attribute` : si le nœud contexte est un élément, cet axe sélectionne tous ses nœuds attributs, dans un ordre arbitraire.
 Sinon, il ne sélectionne rien.
 
 - `namespace` : si le nœud d’origine est un élément, cet axe sélectionne tous les nœuds d’espace de nom qui sont dans la portée de cet élément dans un ordre arbitraire.
 
+<dia-both>
 ### Les axes de type *reverse axes*
 
 | axe                 | signification                                                | types de noeud                                         |
@@ -338,12 +412,14 @@ Sinon, il ne sélectionne rien.
 | `preceding`         | situés avant le nœud contexte (à l’exclusion des nœuds ancêtres) | `element`, `text`, `comment`, `processing instruction` |
 | `preceding-sibling` | frères gauches du nœud contexte                              | `element`, `text`, `comment`, `processing instruction` |
 
+</dia-both>
+
 XPath fournit enfin un axe particulier nommé `self` qui permet de sélectionner le nœud servant de contexte lui-même.
 
 
-### Les axes de type .red[forward axes]
+### Les axes de type forward axes
 
-XPath distingue également une catégorie d’axe .red[reverse axes]
+XPath distingue également une catégorie d’axe reverse axes
 dont la particularité est de ne pouvoir supporter un déplacement que depuis le nœud qui sert de contexte, ou des nœuds situés avant ce nœud dans l’ordre du document :
 
 - `parent` : cet axe sélectionne un seul nœud parent du õud contexte. Si le nœud contexte est un nœud document, l’axe parent est vide.
@@ -364,22 +440,35 @@ XPath fournit enfin un axe particulier nommé `self`
 
 ### Nota : un attribut n’est pas le fils d’un élément ! même si dans XPath on peut atteindre l’élément depuis l’attribut en suivant l’axe parent, etc.
 
+<dia-both>
 ### Axes child, parent, attribute
 
 ![axes1](./images/diagramAxes01.svg)
 
+</dia-both>
+
+<dia-both>
 ### Axes ancestor
 
-![solution](../hnu6053/md/images/diagramAxes02.svg)
+![solution](./images/diagramAxes02.svg)
 
+</dia-both>
+
+<dia-both>
 ### Axes following-sibling et preceding-sibling
 
 ![solution](./images/diagramAxes03.svg)
 
+</dia-both>
+
+<dia-both>
 ### Axe following
 
-![solution](../hnu6053/md/images/diagramAxes04.svg)
+![solution](./images/diagramAxes04.svg)
 
+</dia-both>
+
+<dia-both>
 ## Prédicats
 
 ```xpath
@@ -398,8 +487,12 @@ div[1]
 div[p='test']
 ```
 
-# Les fonctions XPath
+</dia-both>
 
+<dia-both state="intertitre" bg="#1a1a2e">
+## Les Fonctions XPath
+
+</dia-both>
 
 ## Fonctions dans des expressions XPath
 
@@ -407,6 +500,7 @@ XPath propose également un certain nombre de fonctions prédéfinies qui permet
 
 Ces fonctions peuvent s'avérer très utiles pour manipuler des chaînes textuelles, vérifier la valeur d'une clef de travail ou son type, ou encore réaliser des calculs.
 
+<dia-both>
 Voici quelques unes des fonctions XPath communes :
 
 - `concat()` concaténation
@@ -425,6 +519,8 @@ string(/l[@n="2"])
 ```
 
 Liste complète des fonctions XPath dans la spécification XPath (http://www.w3.org/TR/xpath)
+
+</dia-both>
 
 `concat()`
 Cette fonction permet de combiner un nombre quelconque de chaînes de caractères avec des données extraites de noeuds en respectant l'ordre dans lequel les paramètres sont spécifiés.
@@ -467,7 +563,7 @@ translate(/Issue/ShortDescr,
 
 Vous trouverez la liste complète des fonctions XPath dans la spécification XPath (http://www.w3.org/TR/xpath).
 
-
+<dia-both>
 ## Autres fonction utiles
 
 Voici d'autres fonctions XPath très utiles :
@@ -490,26 +586,37 @@ count(//l)
 position(//l[@n="6"])
 ```
 
+</dia-both>
+
+<dia-both>
 ### Les opérateurs
 
 Les **opérateurs** `=`, `!=`, `<`, `>`, `<=`, `>=` peuvent être employées pour les types numériques, chaînes et boooléens.
 
-On dispose également des .red[connecteurs logiques] `and`et `or`.
+On dispose également des connecteurs logique `and`et `or`.
 
 Liste complète des fonctions XPath dans la spécification XPath (http://www.w3.org/TR/xpath)
+
+</dia-both>
 
 
 ### les fonctions booléennes peuvent vous permettre de réaliser des tests sur des arguments
 
+<dia-both>
 ### Les fonctions numériques peuvent vous permettre des réaliser des opérations arithmétiques sur des séquences de nœuds
 
 `count()`
 Vous permet de compter le nombre de noeuds dans le paramètre que vous spécifiez. En règle générale, le paramètre est une expression de chemin XPath qui identifie plusieurs noeuds, par exemple, tous les noeuds Item qui sont des enfants de PODetail. Par exemple :
 count({expressionXPath})
 
+</dia-both>
 
+<dia-both state="intertitre" bg="#1a1a2e">
 ## Ressources
 
+</dia-both>
+
+<dia-both>
 ### Standards
 
 Version 3.0 en 2014, 3.1 en 2017
@@ -526,6 +633,8 @@ Version 2.0 le 23 janvier 2007
 - [XSL Transformations (XSLT) Version 2.0](http://www.w3.org/TR/xslt20/)]
 
 Version 1.0 en 1999
+
+</dia-both>
 
 ## Notes
 

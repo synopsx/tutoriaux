@@ -1,0 +1,3 @@
+[submodule "documentation-bimodale"]
+	path = documentation-bimodale
+	url = https://github.com/ouvroir/documentation-bimodale

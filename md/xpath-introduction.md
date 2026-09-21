@@ -1,5 +1,8 @@
 ---
+title: Introduction à XQuery
 since: 2026-09-04
+author: emchateau
+tags: xpath, tutoriel
 ---
 
 # XPath

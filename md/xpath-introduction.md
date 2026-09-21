@@ -658,28 +658,28 @@ XPath fournit enfin un axe particulier nommé `self`
 <dia-both>
 ### Axes child, parent, attribute
 
-![axes1](./images/diagramAxes01.svg)
+![axes1](../images/diagramAxes01.svg)
 
 </dia-both>
 
 <dia-both>
 ### Axes ancestor
 
-![solution](./images/diagramAxes02.svg)
+![solution](../images/diagramAxes02.svg)
 
 </dia-both>
 
 <dia-both>
 ### Axes following-sibling et preceding-sibling
 
-![solution](./images/diagramAxes03.svg)
+![solution](../images/diagramAxes03.svg)
 
 </dia-both>
 
 <dia-both>
 ### Axe following
 
-![solution](./images/diagramAxes04.svg)
+![solution](../images/diagramAxes04.svg)
 
 </dia-both>
 

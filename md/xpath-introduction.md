@@ -94,7 +94,7 @@ http://www.w3.org/TR/xpath-datamodel/
 
 Les éléments d’un document XML bien formé répondent à un certain nombre de contraintes
 
-![diagramme UML](./images/contraintes.png)
+![diagramme UML](../images/contraintes.png)
 
 </dia-both>
 
@@ -164,7 +164,7 @@ Exercice : Produire la représentation arborescente de [phares.tei.xml](./exempl
 <dia-both>
 ## Sérialisation arborescente de [phares.tei.xml](./exemplesTEI/phares.tei.xml)
 
-![solution](./images/diagram01.svg)
+![solution](../images/diagram01.svg)
 
 </dia-both>
 
@@ -192,7 +192,7 @@ Les siblings d’un nœuds sont les autres enfants de son parent. Les attributs 
 <dia-both>
 ## Les composants du modèle de données XML
 
-![Modèle XDM](./images/xmlSimplifiedXDM.svg)
+![Modèle XDM](../images/xmlSimplifiedXDM.svg)
 
 </dia-both>
 
@@ -200,7 +200,7 @@ Une autre manière possible de visualiser les différentes composantes définies
 
 détailler séquence, item, etc.
 
-<!-- background-image: url(./images/xmlSimplifiedXDM.svg) -->
+<!-- background-image: url(../images/xmlSimplifiedXDM.svg) -->
 
 Eric Van der List. Simplified XDM. https://xmllondon.com/2014/slides/vlist/index.html#/step-16 CC-By 4.0
 
@@ -401,7 +401,7 @@ C’est maintenant ce que nous allons voir !
 
 Sérialisation arborescente de [phares.tei.xml](./exemplesTEI/phares.tei.xml)
 
-![solution](./images/diagram01.svg)
+![solution](../images/diagram01.svg)
 
 </dia-both>
 

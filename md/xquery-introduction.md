@@ -239,7 +239,7 @@ return $i * $i
 for $i in (1, 2, 3)
 return if ($i mod 2 = 0) then $i * $i
 ```
-Avec une claude `let`
+Avec une clause `let`
 
 ```xquery
 let $seq := (3, 2, 1)

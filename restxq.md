@@ -4,7 +4,7 @@ version: 0.1
 tags: traduction, rest, basex
 ---
 
-# Traduction de l’article RESTXQ (documentation BaseX)
+# Traduction de l’article RESTXQ (documentation BaseX, en cours)
 
 [source](http://docs.basex.org/wiki/RESTXQ)
 

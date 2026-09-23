@@ -6,9 +6,9 @@ Ensemble de ressources de formation sur XML, Xquery et SynopsX.
 
 [Formation du 15 septembre 2026](./formation-2026-09-15)
 
-- [Introduction à XML](./build/xml-introduction)
-- [Introduction à XPath](./build/xpath-introduction)
-- [Introduction à XQuery](./build/xquery-introduction)
+- [Introduction à XML](https://synopsx.github.io/tutoriaux/xml-introduction.html)
+- [Introduction à XPath](https://synopsx.github.io/tutoriaux/xpath-introduction.html)
+- [Introduction à XQuery](https://synopsx.github.io/tutoriaux/xquery-introduction.html)
 
 Rédaction en cours
 
@@ -43,3 +43,37 @@ git submodule update --init --recursive
 ## Génération des diapositives
 
 Les diapositives sont rendues avec https://github.com/ouvroir/documentation-bimodale
+
+Configurer les dossiers avec
+
+`config.mk`
+
+Générer les diapositives
+
+```bash
+cd documentation-bimodale
+make all
+```
+
+Nettoyer les diapositive
+
+```bash
+cd documentation-bimodale
+make clean
+```
+
+Servir localement les diapositives
+
+```bash
+cd documentation-bimodale
+make serve
+```
+
+Le répertoire `tutoriaux/build/` est dans le `.gitignore` mais il s’agit d’un worktree de la branche `github-pages`.
+
+Pour publier les diapositives après un nouveau build :
+
+```bash
+cd tutoriaux/build/
+git add -A && git commit -m "Mise à jour du build" && git push
+```

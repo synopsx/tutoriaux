@@ -1,0 +1,3 @@
+# Le .gitignore global ignore dist/ : reveal.js doit être publié
+!dist/
+.DS_Store

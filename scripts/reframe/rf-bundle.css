@@ -1,0 +1,163 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
+[slot=header] {
+  margin-bottom: var(--rf-spacing-m, 24px);
+}
+
+[slot=footer] {
+  margin-top: var(--rf-spacing-m, 24px);
+}
+
+rf-hero,
+rf-grid,
+rf-split-flow,
+rf-carrousel,
+rf-overlay,
+rf-mirror,
+rf-split-flow {
+  max-width: var(--rf-container-max-width, 100%);
+  margin: 0 auto;
+}
+
+rf-hero {
+  width: 100%;
+  display: block;
+  container-type: inline-size;
+  position: relative;
+  container-name: rf-hero;
+  box-sizing: border-box;
+  padding: 0 var(--rf-spacing-s, 8px);
+  margin-top: var(--rf-space-between-modules, 100px);
+}
+rf-hero:not(:last-child) {
+  margin-bottom: var(--rf-space-between-modules, 100px);
+}
+
+rf-grid {
+  width: 100%;
+  display: block;
+  container-type: inline-size;
+  position: relative;
+  container-name: rf-grid;
+  box-sizing: border-box;
+  padding: 0 var(--rf-spacing-s, 8px);
+  margin-top: var(--rf-space-between-modules, 100px);
+}
+rf-grid:not(:last-child) {
+  margin-bottom: var(--rf-space-between-modules, 100px);
+}
+
+rf-split-flow {
+  width: 100%;
+  display: block;
+  container-type: inline-size;
+  position: relative;
+  container-name: rf-split-flow;
+  box-sizing: border-box;
+  padding: 0 var(--rf-spacing-s, 8px);
+  margin-top: var(--rf-space-between-modules, 100px);
+}
+rf-split-flow:not(:last-child) {
+  margin-bottom: var(--rf-space-between-modules, 100px);
+}
+
+rf-overlay {
+  width: 100%;
+  display: block;
+  container-type: inline-size;
+  position: relative;
+  container-name: rf-overlay;
+  box-sizing: border-box;
+  padding: 0 var(--rf-spacing-s, 8px);
+  margin-top: var(--rf-space-between-modules, 100px);
+}
+rf-overlay:not(:last-child) {
+  margin-bottom: var(--rf-space-between-modules, 100px);
+}
+
+rf-mirror {
+  width: 100%;
+  display: block;
+  container-type: inline-size;
+  position: relative;
+  container-name: rf-mirror;
+  box-sizing: border-box;
+  padding: 0 var(--rf-spacing-s, 8px);
+  margin-top: var(--rf-space-between-modules, 100px);
+}
+rf-mirror:not(:last-child) {
+  margin-bottom: var(--rf-space-between-modules, 100px);
+}
+
+rf-parallax {
+  width: 100%;
+  display: block;
+  container-type: inline-size;
+  position: relative;
+  container-name: rf-parallax;
+  box-sizing: border-box;
+  padding: 0 var(--rf-spacing-s, 8px);
+  margin-top: var(--rf-space-between-modules, 100px);
+}
+rf-parallax:not(:last-child) {
+  margin-bottom: var(--rf-space-between-modules, 100px);
+}
+
+rf-carrousel {
+  width: 100%;
+  display: block;
+  container-type: inline-size;
+  position: relative;
+  container-name: rf-carrousel;
+  box-sizing: border-box;
+  padding: 0 var(--rf-spacing-s, 8px);
+  margin-top: var(--rf-space-between-modules, 100px);
+}
+rf-carrousel:not(:last-child) {
+  margin-bottom: var(--rf-space-between-modules, 100px);
+}
+
+rf-light-table {
+  width: 100%;
+  display: block;
+  container-type: inline-size;
+  position: relative;
+  container-name: rf-light-table;
+  box-sizing: border-box;
+  padding: 0 var(--rf-spacing-s, 8px);
+  margin-top: var(--rf-space-between-modules, 100px);
+}
+rf-light-table:not(:last-child) {
+  margin-bottom: var(--rf-space-between-modules, 100px);
+}
+
+rf-book-reader {
+  width: 100%;
+  display: block;
+  container-type: inline-size;
+  position: relative;
+  container-name: rf-book-reader;
+  box-sizing: border-box;
+  padding: 0 var(--rf-spacing-s, 8px);
+  margin-top: var(--rf-space-between-modules, 100px);
+}
+rf-book-reader:not(:last-child) {
+  margin-bottom: var(--rf-space-between-modules, 100px);
+}
+
+rf-light-table {
+  position: relative;
+  padding: 0;
+  min-width: 100%;
+  min-height: 100svh;
+}
+
+:root {
+  /** COLORS **/
+  --rf-color-primary: #000;
+  /** FONTS **/
+  --rf-font-family: "Inter", serif;
+  /** GRID **/
+  --rf-columns: 12;
+  --rf-col-gap: 16px;
+  --rf-row-gap: 16px;
+}

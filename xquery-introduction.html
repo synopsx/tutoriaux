@@ -1,0 +1,617 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <title>Introduction à XQuery</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+
+    <!-- Métadonnées -->
+        <meta name="author" content="emchateau" />
+       
+    <!-- Gif transparent le plus petit qui soit, évite une requête inutile vers le serveur (et une erreur dans la console). -->
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=" />
+
+    <!-- Feuilles de style -->
+    <!-- Général -->
+    <link rel="stylesheet" href="style/general/reset.css" />
+    <link rel="stylesheet" href="style/general/variables.css" />
+    <link rel="stylesheet" href="style/general/global.css" />
+    <!-- Polices -->
+    <link rel="stylesheet" href="fonts/overused-grotesk/overused-grotesk.css" />
+    <!-- Dispositions de page -->
+    <link rel="stylesheet" href="style/layout/page-layout.css" />
+    <!-- Composants -->
+    <link rel="stylesheet" href="style/components/prose.css" />
+    <link rel="stylesheet" href="style/components/conteneur-diapositives.css" />
+    <!-- <link rel="stylesheet" href="style/components/hypothesis.css" />-->
+
+    <!-- Styleguide (demo only) -->
+    <link rel="stylesheet" href="style/components/styleguide.css" />
+
+    <link rel="stylesheet" href="lib/reveal.js-6.0.1/dist/reveal.css" />
+    <link
+      rel="stylesheet"
+      href="lib/reveal.js-6.0.1/dist/plugin/highlight/monokai.css"
+    />
+    <link rel="stylesheet" href="style/components/theme.reveal.css" />
+    <link rel="stylesheet" href="scripts/reframe/rf-bundle.css" />
+    <!-- <script src="scripts/hypothesis-config.js"></script>
+    <script async src="https://hypothes.is/embed.js"></script>-->
+  </head>
+  <body>
+    <div class="page-layout">
+      <header>
+        <!-- Logo etc. -->
+      </header>
+
+      <main class="page-layout__main">
+        <div class="page-layout__infra">Zone infra</div>
+
+        <article class="page-layout__content">
+          <div class="prose">
+            <h1>Introduction à XQuery</h1>
+
+            <details open class="conteneur-diapositives">
+              <summary class="conteneur-diapositives-etiquette">
+                Diapositives
+                <a
+                  href="?presentation"
+                  target="_blank"
+                  rel="noopener"
+                  style="float: right; font-size: 0.85em; color: inherit"
+                  >Présenter ↗</a
+                >
+              </summary>
+
+              <div class="reveal" style="width: 100%; aspect-ratio: 16 / 9">
+                <div class="slides">
+                  <!-- Diapositives insérées ici -->
+                </div>
+              </div>
+            </details>
+
+                        <p>
+              Le diaporama utilise la bibliothèque
+              <a href="https://revealjs.com/" target="_blank">Reveal.js</a>
+              (cliquez dans le cadre, puis appuyez sur la touche
+              <code>f</code> pour lancer le mode plein écran).
+            </p>
+
+                        <nav id="toc" role="doc-toc">
+              <h2>Sommaire</h2>
+              <ul>
+              <li><a href="#introduction-à-xquery"
+              id="toc-introduction-à-xquery">Introduction à
+              XQuery</a></li>
+              <li><a href="#introduction-à-xquery"
+              id="toc-introduction-à-xquery">01 | Introduction à
+              XQuery</br></a>
+              <ul>
+              <li><a href="#historique"
+              id="toc-historique">Historique</a>
+              <ul>
+              <li><a href="#spécifications"
+              id="toc-spécifications">Spécifications</a></li>
+              <li><a href="#extensions"
+              id="toc-extensions">Extensions</a></li>
+              </ul></li>
+              <li><a href="#caractéristiques-du-langage"
+              id="toc-caractéristiques-du-langage">Caractéristiques du
+              langage</a></li>
+              <li><a href="#rappels-xpath"
+              id="toc-rappels-xpath">Rappels XPath</a>
+              <ul>
+              <li><a href="#syntaxe-des-littéraux"
+              id="toc-syntaxe-des-littéraux">Syntaxe des
+              littéraux</a></li>
+              <li><a href="#appels-de-fonction"
+              id="toc-appels-de-fonction">Appels de fonction</a></li>
+              <li><a href="#expression-arithmétique"
+              id="toc-expression-arithmétique">Expression
+              arithmétique</a></li>
+              <li><a href="#test-logique" id="toc-test-logique">Test
+              logique</a></li>
+              <li><a href="#expression-conditionnelle"
+              id="toc-expression-conditionnelle">Expression
+              conditionnelle</a></li>
+              </ul></li>
+              <li><a href="#forme-des-commentaires-xquery"
+              id="toc-forme-des-commentaires-xquery">Forme des
+              commentaires XQuery</a></li>
+              <li><a href="#expressions-flowr"
+              id="toc-expressions-flowr">Expressions FLOWR</a></li>
+              <li><a href="#les-expressions-flowr"
+              id="toc-les-expressions-flowr">Les expressions FLOWR</a>
+              <ul>
+              <li><a href="#mettre-var-dans-un-élément-xml"
+              id="toc-mettre-var-dans-un-élément-xml">Mettre $var dans
+              un élément XML</a></li>
+              <li><a href="#utilisation-dune-boucle-for"
+              id="toc-utilisation-dune-boucle-for">Utilisation d’une
+              boucle <code>for</code></a></li>
+              <li><a href="#utilisation-de-order-by"
+              id="toc-utilisation-de-order-by">Utilisation de
+              <code>order by</code></a></li>
+              </ul></li>
+              <li><a href="#création-des-nœuds-xml"
+              id="toc-création-des-nœuds-xml">Création des nœuds
+              XML</a></li>
+              <li><a href="#création-des-nœuds-xml"
+              id="toc-création-des-nœuds-xml">Création des nœuds XML</a>
+              <ul>
+              <li><a href="#générer-une-séquence-déléments-xml"
+              id="toc-générer-une-séquence-déléments-xml">Générer une
+              séquence d’éléments XML</a></li>
+              </ul></li>
+              <li><a href="#les-fonctions" id="toc-les-fonctions">Les
+              fonctions</a>
+              <ul>
+              <li><a href="#typage-de-la-fonction"
+              id="toc-typage-de-la-fonction">Typage de la
+              fonction</a></li>
+              </ul></li>
+              <li><a href="#travail-avec-la-base-de-données"
+              id="toc-travail-avec-la-base-de-données">Travail avec la
+              base de données</a></li>
+              <li><a href="#modules" id="toc-modules">Modules</a></li>
+              <li><a href="#ressources-utiles"
+              id="toc-ressources-utiles">Ressources utiles</a></li>
+              <li><a href="#tutoriaux"
+              id="toc-tutoriaux">Tutoriaux</a></li>
+              <li><a href="#notes" id="toc-notes">Notes</a></li>
+              </ul></li>
+              </ul>
+            </nav>
+             <h1 id="introduction-à-xquery">Introduction à XQuery</h1>
+<dia-only state="centered">
+<h1 id="introduction-à-xquery">01 | Introduction à XQuery</br></h1>
+<p>ENS Lyon – septembre 2026</p>
+</dia-only>
+<dia-both>
+<p><a href="https://www.w3.org/TR/xquery-31/">XQuery</a> est un langage
+de requêtes et un langage de programmation fonctionnelle destiné à
+interroger et transformer des collections de données structurées et non
+structurées, principalement sous la forme de XML.</p>
+</dia-both>
+<blockquote>
+<p>XML is a versatile markup language, capable of labeling the
+information content of diverse data sources including structured and
+semi-structured documents, relational databases, and object
+repositories. A query language that uses the structure of XML
+intelligently can express queries across all these kinds of data,
+whether physically stored in XML or viewed as XML via middleware. This
+specification describes a query language called XQuery, which is
+designed to be broadly applicable across many types of XML data
+sources.<a href="#fn1" class="footnote-ref" id="fnref1"
+role="doc-noteref"><sup>1</sup></a><a href="#fn2" class="footnote-ref"
+id="fnref2" role="doc-noteref"><sup>2</sup></a><a href="#fn3"
+class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
+</blockquote>
+<p>Depuis la version 3, XQuery prend également en charge le format léger
+d’échange de données JSON en ajoutant les <em>maps</em> et les
+<em>arrays</em> au modèle de données et en fournissant de nouvelles
+expressions et fonctions. La <a
+href="https://qt4cg.org/specifications/xquery-40/">version 4</a> du
+langage (en cours de développement) introduit une extension de XPath
+pour les objets JSON. <a
+href="https://www.w3.org/TR/xquery-31/">XQuery</a> est donc applicable à
+un grand nombre de sources de données qu’elles soient encodées en XML ou
+représentée en JSON, en CSV ou au format texte.</p>
+<p>Le langage opère notamment sur le modèle de données XML (<a
+href="https://www.w3.org/TR/xpath-datamodel-31/">XML Data Model
+(XDM)</a>). Là où XSLT est destiné à transformer des données XML, XQuery
+est principalement destiné à faire des recherche dans des données XML.
+Il s’utilise habituellement avec une base de données XML capable
+d’indexer les nœuds d’un document XML. Mais c’est aussi un langage de
+programmation <em>turing complet</em> qui peut être utilisé dans de
+nombreuses applications. XQuery est principalement efficace lorsqu’il
+s’agit de manipuler ou de concilier des données de différents genre.</p>
+<!-- @todo revoir la formulation -->
+<dia-both>
+<h2 id="historique">Historique</h2>
+<blockquote>
+<p>The mission of the <em>XML Query</em> working group is to
+<strong>provide flexible query facilities</strong> to extract data from
+real and virtual documents on the World Wide Web, therefore finally
+providing the needed interaction between the Web world and the database
+world. Ultimately, collections of XML files will be accessed like
+databases. (<a href="https://www.w3.org/XML/Query/">Mission statement of
+the XML Query working group</a>)</p>
+</blockquote>
+</dia-both>
+<dia-both>
+<h3 id="spécifications">Spécifications</h3>
+<ul>
+<li><a href="http://www.w3.org/TR/xquery-10/">XQuery 1.0</a>
+recommandation du W3C le 23 janvier 2007</li>
+<li><a href="https://www.w3.org/TR/xquery-30/">XQuery 3.0</a>
+recommandation du W3C le 8 avril 2014</li>
+<li><a href="https://www.w3.org/TR/xquery-31/">XQuery 3.1</a>
+recommandation du W3C le 21 mars 2017</li>
+<li><a href="https://qt4cg.org/specifications/xquery-40/">XQuery 4.0</a>
+proposition de recommandation du qt4, 2026.</li>
+</ul>
+<p>Voir aussi les spécifications XPath et XDM concernées</p>
+</dia-both>
+<!-- @todo revoir + mentionner les spécifications XPath et XDM concernée -->
+<p>XQuery est un langage hôte de <a
+href="https://www.w3.org/TR/xpath-31/">XPath</a>. Ainsi, XPath est
+généralement un sous-ensemble de XQuery. Autrement dit, <strong>toute
+expression XPath sera une expression XQuery valide</strong>. Le langage
+XQuery apporte toutefois un certain nombre de fonctionnalités pour
+requêter et manipuler des données XML. La version 3.1 du langage étend
+XQuery pour travailler sur des données JSON en ajoutant des types
+<em>maps</em> et <em>arrays</em> au langage.</p>
+<dia-both>
+<h3 id="extensions">Extensions</h3>
+<ul>
+<li><a href="https://www.w3.org/TR/xpath-full-text-30/">XQuery Full
+Text</a></li>
+<li><a href="https://www.w3.org/TR/xquery-update-30/">XQuery
+Update</a></li>
+<li><a
+href="http://exquery.github.io/exquery/exquery-restxq-specification/restxq-1.0-specification.html">RESTXQ</a></li>
+</ul>
+</dia-both>
+<p>Plusieurs extensions de XQuery peuvent s’avérer utiles : XQuery
+Update est destinée à faciliter la mise à jour de documents XML, XQuery
+Full-text sert à faire des recherches dans des chaînes de caractères.
+RestXQ propose une extension destinée à faciliter la réalisation
+d’applications REST.</p>
+<dia-both>
+<h2 id="caractéristiques-du-langage">Caractéristiques du langage</h2>
+<ul>
+<li>Langage fonctionnel</li>
+<li>Turing complet</li>
+<li>Analogue à SQL</li>
+<li>Fondé sur XPath</li>
+<li>Standardisé par le W3C</li>
+</ul>
+</dia-both>
+<dia-both>
+<p><strong>L’évaluation de toute expression XQuery renvoie une
+séquence.</strong> Dans le <a
+href="https://www.w3.org/TR/xpath-datamodel-31/">XML Data Model
+(XDM)</a>, toutes les expressions XPath ramènent une séquence. Une
+séquence se compose de zéro, un ou plusieurs items. Les items peuvent
+être des littéraux, des valeurs atomiques ou des fonctions.</p>
+</dia-both>
+<h2 id="rappels-xpath">Rappels XPath</h2>
+<h3 id="syntaxe-des-littéraux">Syntaxe des littéraux</h3>
+<p>Entier (<em>integer</em>)</p>
+<pre class="xquery"><code>1</code></pre>
+<p>Chaîne de caractères (<em>string</em>)</p>
+<pre class="xquery"><code>&#39;ceci est une chaîne de caractères&#39;</code></pre>
+<pre class="xquery"><code>&quot;ceci est une chaîne de caractères&quot;</code></pre>
+<p>Séquence (<em>sequence</em>)</p>
+<pre class="xquery"><code>1, 2, 3</code></pre>
+<pre class="xquery"><code>(1, 2, 3)</code></pre>
+<h3 id="appels-de-fonction">Appels de fonction</h3>
+<pre class="xquery"><code>string(16)</code></pre>
+<p>Concaténations et conversions</p>
+<pre class="xquery"><code>string(16+1)</code></pre>
+<pre class="xquery"><code>concat((16+1),  1)</code></pre>
+<pre class="xquery"><code>fn:concat(&#39;e&#39;, 1)</code></pre>
+<pre class="xquery"><code>&#39;e&#39; || 1</code></pre>
+<h3 id="expression-arithmétique">Expression arithmétique</h3>
+<pre class="xquery"><code>1 + 1 + 1</code></pre>
+<h3 id="test-logique">Test logique</h3>
+<pre class="xquery"><code>true() != false()</code></pre>
+<pre class="xquery"><code>(1+1) = 2</code></pre>
+<h3 id="expression-conditionnelle">Expression conditionnelle</h3>
+<pre class="xquery"><code>if (1 = 1) then &#39;oui&#39; else &#39;non&#39;</code></pre>
+<dia-both>
+<h2 id="forme-des-commentaires-xquery">Forme des commentaires
+XQuery</h2>
+<p>XQuery est un langage souriant ! Les commentaires sont délimités par
+les digrammes <code>(:</code> et <code>:)</code>.</p>
+<pre class="xquery"><code>(: ceci est un commentaire :)</code></pre>
+<pre class="xquery"><code>(:
+ : Ceci est un commentaire multiligne
+ :)</code></pre>
+</dia-both>
+<dia-both state="intertitre" bg="#1a1a2e">
+<h2 id="expressions-flowr">Expressions FLOWR</h2>
+</dia-both>
+<dia-both>
+<h2 id="les-expressions-flowr">Les expressions FLOWR</h2>
+<ul>
+<li><code>for</code> itère sur une séquence de nœuds ou d’éléments
+(boucle)</li>
+<li><code>let</code> déclare une variable et lui assigne une valeur ou
+un résultat</li>
+<li><code>where</code> filtre les éléments selon un ou plusieurs
+critères</li>
+<li><code>order by</code> trie les résultats selon un ordre spécifique
+(croissant ou décroissant)</li>
+<li><code>return</code> définit la structure et le contenu du résultat
+final à afficher </dia-both></li>
+</ul>
+<p>XQuery ajoute à XPath un certain nombre d’instructions spécifiques
+destinées à structurer des requêtes. On parle d’expression FLOWR pour
+décrire les cinq clauses principales : <code>for</code>,
+<code>let</code>, <code>where</code>, <code>order by</code> et
+<code>return</code>.</p>
+<ul>
+<li><code>for</code> itère sur une séquence de nœuds ou d’éléments
+(boucle)</li>
+<li><code>let</code> déclare une variable et lui assigne une valeur ou
+un résultat</li>
+<li><code>where</code> filtre les éléments selon un ou plusieurs
+critères</li>
+<li><code>order by</code> trie les résultats selon un ordre spécifique
+(croissant ou décroissant)</li>
+<li><code>return</code> définit la structure et le contenu du résultat
+final à afficher</li>
+</ul>
+<p>Les clauses <code>for</code> et <code>let</code> peuvent être
+utilisées plusieurs fois ou être combinées ensemble. Toute expression
+FLOWR doit nécessairement se terminer par une clause
+<code>return</code>. Les clauses <code>where</code> et
+<code>order by</code> sont facultatives.</p>
+<p><dia-both> ### Affecter et retourner une variable</p>
+<pre class="xquery"><code>let $var := &#39;Salut !&#39;
+return $var</code></pre>
+<p>e</p>
+<pre class="xquery"><code>let $var := &#39;Salut !&#39;
+return $var || &#39; c’est le fun&#39;</code></pre>
+</dia-both>
+<dia-both>
+<h3 id="mettre-var-dans-un-élément-xml">Mettre $var dans un élément
+XML</h3>
+<pre class="xquery"><code>let $var := &#39;texte&#39;
+return 
+        &lt;p&gt;{$var}&lt;/item&gt;</code></pre>
+</dia-both>
+<dia-both>
+<h3 id="utilisation-dune-boucle-for">Utilisation d’une boucle
+<code>for</code></h3>
+<pre class="xquery"><code>for $i in (1, 2, 3)
+return $i</code></pre>
+<pre class="xquery"><code>for $i in (1, 2, 3)
+return $i * $i</code></pre>
+</dia-both>
+<dia-both>
+<pre class="xquery"><code>for $i in (1, 2, 3)
+return if ($i mod 2 = 0) then $i * $i</code></pre>
+<p>Avec une clause <code>let</code></p>
+<pre class="xquery"><code>let $seq := (3, 2, 1)
+for $i in $seq
+return $i + 1</code></pre>
+</dia-both>
+<dia-both>
+<h3 id="utilisation-de-order-by">Utilisation de
+<code>order by</code></h3>
+<pre class="xquery"><code>let $seq := (3, 2, 1)
+for $i in $seq
+order by $i
+return $i </code></pre>
+<pre class="xquery"><code>let $seq := (3, 2, 1)
+for $i in $seq
+order by $i ascending (: descending :)
+return $i </code></pre>
+</dia-both>
+<dia-both>
+<p>Travail avec un document XML</p>
+<pre class="xquery"><code>let $document := fn:doc(&quot;tei.xml&quot;)
+for $persName in $document//tei:persName
+where $persName/@id
+order by $persName/@id
+return $persName/text()</code></pre>
+<p>La clause <code>where</code> filtre les résultats</p>
+</dia-both>
+<h2 id="création-des-nœuds-xml">Création des nœuds XML</h2>
+<p>Le XML Data Model définit 7 types de nœuds. En XQuery, il est
+possible de créer des nœuds en utilisant des <strong>constructeurs
+directs</strong> (littéraux) ou bien en les computant.</p>
+<dia-both>
+<h2 id="création-des-nœuds-xml">Création des nœuds XML</h2>
+<p>Constructeurs directs</p>
+<pre class="xquery"><code>&lt;p/&gt; (: constructeur direct d’un élément XML p :)
+&lt;p xml:id=&quot;id01&quot;/&gt; (: constructeur direct d’un élément XML p vide avec un attribut @id qui avec la valeur id01 :)</code></pre>
+<p>Éléments computés</p>
+<pre class="xquery"><code>element p { &#39;&#39; } (: computation d’un élément XML p vide :)
+element p {
+    attribute xml:id { &#39;id01&#39; }
+    &#39;&#39;
+} (: computation d’un élément XML p vide avec un attribut @id qui avec la valeur id01 :)</code></pre>
+</dia-both>
+<dia-both>
+<h3 id="générer-une-séquence-déléments-xml">Générer une séquence
+d’éléments XML</h3>
+<pre class="xquery"><code>let $seq := (3, 2, 1)
+for $i in $seq
+return &lt;item&gt;{$i}&lt;/item&gt;</code></pre>
+</dia-both>
+<dia-both>
+<p>Pour obtenir un document XML valide</p>
+<pre class="xquery"><code>&lt;liste&gt;{
+    let $seq := (3, 2, 1)
+    for $i in $seq
+    return &lt;item&gt;{$i}&lt;/item&gt;
+}&lt;/liste&gt;</code></pre>
+<pre class="xquery"><code>let $content := 
+  let $seq := (1, 2, 3)
+  for $i in $seq
+  return &lt;item&gt;{$i}&lt;/item&gt;
+return &lt;liste&gt;{$content}&lt;/liste&gt;</code></pre>
+</dia-both>
+<dia-both state="intertitre" bg="#1a1a2e">
+<h2 id="les-fonctions">Les fonctions</h2>
+<p><dia-both></p>
+<p><dia-both> ### Définition d’une fonction</p>
+<pre class="xquery"><code>declare function nomDeFonction($param) {
+    &#39;corps de la fonction&#39;
+};</code></pre>
+<p>Appels de fonction</p>
+<pre class="xquery"><code>nomDeFonction($param)</code></pre>
+</dia-both>
+<dia-both>
+<h3 id="typage-de-la-fonction">Typage de la fonction</h3>
+<pre class="xquery"><code>declare function local:toto($param as xs:integer, $param2 as xs:string) as element()* {
+  &lt;div&gt;{
+    (&lt;p&gt;je suis une fonction&lt;/p&gt;,
+    &lt;p&gt;{$param}&lt;/p&gt;,
+    &lt;p&gt;{$param2}&lt;/p&gt;,
+    $param3)
+   }&lt;/div&gt;
+};
+local:toto(1, &#39;string&#39;, &lt;element&gt;element&lt;/element&gt;)</code></pre>
+</dia-both>
+<pre class="xquery"><code>declare function local:toto($param as xs:integer, $param2 as xs:string) as element() {
+  &lt;div&gt;
+    &lt;p&gt;je suis une fonction ressource &lt;/p&gt;
+    &lt;p&gt;{$param}&lt;/p&gt;
+    &lt;p&gt;{$param2}&lt;/p&gt;
+  &lt;/div&gt;
+};
+local:toto(1, &#39;string&#39;)</code></pre>
+<dia-both state="intertitre" bg="#1a1a2e">
+<h2 id="travail-avec-la-base-de-données">Travail avec la base de
+données</h2>
+</dia-both>
+<dia-both>
+<p>La création d’une base de données</p>
+<pre class="xquery"><code>db:get(&#39;gdp&#39;)</code></pre>
+<pre class="xquery"><code>db:get(&#39;gdp&#39;)//*:title</code></pre>
+<pre class="xquery"><code>let $get := db:get(&#39;gdp&#39;)
+return $gdp//*:title</code></pre>
+</dia-both>
+<dia-both>
+<pre class="xquery"><code>let $gdp := db:get(&#39;gdp&#39;)
+for $titre in $gdp/*:title
+return &lt;h1&gt;{$titre}&lt;/h1&gt;</code></pre>
+</dia-both>
+<dia-both>
+<pre class="xquery"><code>declare function local:titreGdp() {
+  let $gdp := db:get(&#39;gdp&#39;)
+  for $title in $gdp//*:title
+  return &lt;h1&gt;{$title//text()}&lt;/h1&gt;
+};
+local:titreGdp()</code></pre>
+</dia-both>
+<dia-both>
+<pre class="xquery"><code>declare function local:titreGdp( $edition ) {
+  let $gdp := db:get(&#39;gdp&#39;)
+  for $title in $gdp//*:title
+  return &lt;h1&gt;{$title//text()}&lt;/h1&gt;
+};
+local:titreGdp(&#39;gdpBrice1684&#39;)</code></pre>
+</dia-both>
+<dia-both state="intertitre" bg="#1a1a2e">
+<h2 id="modules">Modules</h2>
+<p><dia-both></p>
+</dia-both>
+<dia-both>
+<p>Créer un module, enregistrer le dans <code>webapp/</code></p>
+<pre class="xquery"><code>xquery version &quot;3.0&quot; ;
+module namespace local = &quot;local&quot; ;
+declare 
+  %restxq:path(&#39;mapage&#39;)
+function local:toto($param as xs:integer, $param2 as xs:string, $param3 as element()) as element()* {
+  &lt;div&gt;
+    (&lt;p&gt;je suis une fonction&lt;/p&gt;,
+    &lt;p&gt;{$param}&lt;/p&gt;,
+    &lt;p&gt;{$param2}&lt;/p&gt;,
+    {$param3})
+  &lt;/div&gt;
+};</code></pre>
+</dia-both>
+<p>Aller à localhost:8984</p>
+<p><span class="citation" data-cites="todo">@todo</span> montrer exemple
+sans param</p>
+<dia-both>
+<p>ajouter les variables</p>
+<pre class="xquery"><code>xquery version &quot;3.0&quot; ;
+module namespace local = &quot;local&quot; ;
+declare 
+  %restxq:path(&#39;mapage&#39;)
+function local:toto($param as xs:integer, $param2 as xs:string, $param3 as element()) as element()* {
+  &lt;div&gt;
+    (&lt;p&gt;je suis une fonction&lt;/p&gt;,
+    &lt;p&gt;{$param}&lt;/p&gt;,
+    &lt;p&gt;{$param2}&lt;/p&gt;,
+    {$param3})
+  &lt;/div&gt;
+};</code></pre>
+</dia-both>
+<dia-both>
+<pre class="xquery"><code>xquery version &quot;3.0&quot; ;
+module namespace local = &quot;local&quot; ;
+declare 
+  %restxq:path(&#39;/mapage/{$param}/{$param1}&#39;)
+function local:toto($param as xs:string, $param2 as xs:string) {
+  &lt;div&gt;
+    (&lt;p&gt;je suis une fonction&lt;/p&gt;,
+    &lt;p&gt;{$param}&lt;/p&gt;,
+    &lt;p&gt;{$param2}&lt;/p&gt;,
+    {$param3})
+  &lt;/div&gt;
+};</code></pre>
+</dia-both>
+<dia-both>
+<pre class="xquery"><code>xquery version &quot;3.0&quot; ;
+module namespace local = &quot;local&quot;; 
+
+declare 
+  %restxq:path(&#39;unchemin/{$edition}&#39;)
+  %output:method(&quot;html&quot;)
+  %output:html-version(&quot;5.0&quot;)
+function local:titreGdp($edition as xs:string) {
+  let $gdp := db:open(&#39;gdp&#39;)
+  for $titre in $gdp//*:TEI[*:teiHeader/*:fileDesc/*:sourceDesc[@xml:id=$edition]]//*:head
+  return &lt;h1&gt;{fn:normalize-space($titre)}&lt;/h1&gt;
+};</code></pre>
+</dia-both>
+<dia-both state="intertitre" bg="#1a1a2e">
+<h2 id="ressources-utiles">Ressources utiles</h2>
+</dia-both>
+<dia-both>
+<h2 id="tutoriaux">Tutoriaux</h2>
+<ul>
+<li>http://www.tutorialspoint.com/xquery/xquery_quick_guide.htm</li>
+<li>https://www.ibm.com/docs/en/db2-for-zos/11?topic=zos-xml</li>
+<li>https://docs.basex.org/main/XQuery</li>
+</ul>
+</dia-both>
+<h2 id="notes">Notes</h2>
+<section id="footnotes" class="footnotes footnotes-end-of-document"
+role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1"><p>http://www.w3.org/TR/xquery-10/<a href="#fnref1"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>http://www.w3.org/TR/xquery-30/<a href="#fnref2"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>http://www.w3.org/TR/xquery-31/<a href="#fnref3"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+                      </div>
+        </article>
+
+        <div class="page-layout__extra">Zone extra</div>
+      </main>
+
+      <footer>
+        <nav><a href="index.html">← Retour à l’index</a></nav>
+        <p>
+          CC-BY-NC –
+          <a href="https://orcid.org/0000-0003-4092-4569"
+            >Emmanuel Château-Dutier (Université de Montréal)</a
+          >
+        </p>
+      </footer>
+
+      <!-- Scripts -->
+      <script src="lib/reveal.js-6.0.1/dist/reveal.js"></script>
+      <script src="lib/reveal.js-6.0.1/dist/plugin/notes.js"></script>
+      <script src="lib/reveal.js-6.0.1/dist/plugin/highlight.js"></script>
+      <script src="scripts/dia-elements.js"></script>
+      <script src="scripts/diapositives.js"></script>
+      <script src="scripts/bibliography.js"></script>
+      <script src="scripts/reframe/reframe.js"></script>
+      <script src="scripts/livereload.js"></script>
+    </div>
+  </body>
+</html>

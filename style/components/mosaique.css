@@ -1,0 +1,24 @@
+/**
+ * Mosaique
+ * Grille de prévisualisation des jeux de diapositives.
+ */
+
+.mosaique {
+  --mosaique-colonnes: 1;
+
+  display: grid;
+  grid-template-columns: repeat(var(--mosaique-colonnes), 1fr);
+  gap: 2rem;
+  margin-block: var(--prose-espacement-elements);
+}
+
+@media (min-width: 48rem) {
+  .mosaique {
+    --mosaique-colonnes: 2;
+  }
+}
+
+.mosaique__seance {
+  display: flex;
+  flex-direction: column;
+}

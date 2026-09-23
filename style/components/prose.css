@@ -1,0 +1,377 @@
+/**
+ * Prose
+ * Contenu principal : texte, images, contenus de forme longue.
+ * Toutes les règles sont imbriquées dans le sélecteur `.prose`.
+ */
+
+.prose {
+  --prose-espacement-elements: 1.5rem;
+  --prose-espacement-elements-extra: 2.5rem;
+  --prose-taille-police: var(--taille-police-corps);
+  --prose-interlignage: 1.375;
+  --prose-couleur-ancres: var(--couleur-ancres);
+  --prose-couleur-ancres-survol: var(--couleur-ancres-survol);
+  --prose-couleur-ancres-clic: var(--couleur-ancres-clic);
+  --prose-couleur-citation: var(--couleur-citation);
+  --prose-couleur-citation-clair: var(--couleur-citation-clair);
+  --prose-couleur-puce: var(--bleu-royal-500);
+  --prose-couleur-refs: var(--couleur-refs);
+  --prose-couleur-refs-survol: var(--couleur-refs-survol);
+  --prose-couleur-refs-clic: var(--couleur-refs-clic);
+
+  /* typo générale */
+  font-family: var(--police-corps);
+  font-size: var(--prose-taille-police);
+  font-weight: var(--graisse-corps);
+  line-height: var(--prose-interlignage);
+}
+
+.prose h1,
+.prose h2,
+.prose h3,
+.prose h4,
+.prose h5,
+.prose h6 {
+  /* marge du haut semi-proportionnelle */
+  margin-block-start: calc(1rem + .5em);
+  /* marge du bas fixe */
+  margin-block-end: .75rem;
+
+  font-family: var(--police-entetes);
+  font-weight: var(--graisse-entetes, 700);
+  line-height: var(--interlignag-entetes);
+}
+
+.prose h1 {
+  font-size: var(--taille-police-h1);
+}
+
+.prose h2 {
+  font-size: var(--taille-police-h2);
+}
+
+.prose h3 {
+  font-size: var(--taille-police-h3);
+}
+
+.prose h4 {
+  font-size: var(--taille-police-h4);
+}
+
+.prose h5 {
+  font-size: var(--taille-police-h5);
+}
+
+.prose h6 {
+  font-size: var(--taille-police-h6);
+}
+
+.prose p {
+  margin-block: var(--prose-espacement-elements);
+}
+
+.prose a {
+  color: var(--prose-couleur-ancres);
+  text-decoration: underline;
+  transition: color .15s;
+}
+.prose a:hover {
+  color: var(--prose-couleur-ancres-survol);
+  text-decoration: none;
+}
+.prose a:visited {
+  color: var(--prose-couleur-ancres-clic);
+  text-decoration: none;
+}
+
+.prose b,
+.prose strong {
+  font-weight: var(--graisse-corps-gras, 700);
+}
+
+.prose blockquote {
+  color: var(--prose-couleur-citation);
+  margin-block: var(--prose-espacement-elements);
+  border-inline-start: 0.25em solid var(--prose-couleur-citation-clair);
+  padding-inline-start: 1em;
+}
+
+/* règle horizontale */
+.prose hr {
+  --hr-espacement-vertical: var(--prose-espacement-elements);
+  --hr-epaisseur-bordure: 2px;
+  --hr-couleur-bordure: currentColor; /* la couleur pourrait changer selon le contexte */
+
+  display: block;
+  margin-block: var(--hr-espacement-vertical);
+
+  color: inherit;
+  border: 0;
+  border-top: var(--hr-epaisseur-bordure) solid var(--hr-couleur-bordure);
+}
+
+.prose mark {
+  background-color: var(--couleur-fond-subrillance);
+  color: inherit;
+  border-radius: .25em;
+  padding: .125em .25em;
+  line-height: 1;
+}
+
+.prose ul {
+  list-style: none outside none; /* nous stylons avec li::before */
+  padding-inline: 0;
+  margin-inline-start: 0;
+}
+.prose ul li {
+  position: relative;
+  padding-inline-start: 2.5rem; /* faire place à la puce */
+  margin-inline-start: 0;
+}
+.prose ul li::before {
+  content: '';
+
+  display: inline-block;
+  position: absolute;
+  left: 1.25rem;
+  top: calc(var(--interlignage-corps) * 1em / 2.7); /* relatif à la taille de police et à l'interlignage */
+  width: .625rem; /* 16px => 10px */
+  aspect-ratio: 1 / 1;
+
+  background-color: var(--prose-couleur-puce);
+  border-radius: 50%;
+}
+
+.prose ol li::marker {
+  color: var(--prose-couleur-puce, currentColor);
+}
+
+.prose pre {
+  overflow-x: auto;
+}
+
+.prose code {
+  padding: .125rem .25rem;
+  font-size: 81.25%; /* 16px => 14px */
+  line-height: 1; /* réduire l'espace vertical */
+  border-radius: .25rem; /* accorder avec padding-inline */
+  color: var(--couleur-code);
+  background-color: var(--couleur-fond-code);
+  letter-spacing: 0.025em; /* aider à bien distinguer caractères monochasse */
+}
+
+/* Images et figures */
+.prose img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* gérer les images enfant comme des figures */
+.prose > img {
+  margin-block: var(--prose-espacement-elements-extra);
+  margin-inline: auto;
+  display: flex;
+}
+
+.prose figure {
+  margin-block: var(--prose-espacement-elements-extra);
+  margin-inline: auto;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  /* Espacement éventuel de la légende */
+  gap: .5rem;
+}
+
+.prose figure img {
+  /* block: éviter espacements (traité comme image inline, avec blancs typographiques) */
+  display: block;
+}
+
+.prose figcaption {
+  /* espacement appliqué par le gap de l'élément flex*/
+  margin: 0;
+
+  font-size: var(--taille-police-smaller);
+}
+
+/* Diapositives */
+
+/* Custom elements — display block par défaut (les éléments inconnus sont inline) */
+dia-both,
+dia-only {
+  display: block;
+}
+
+/*
+dia-both est transparent dans la prose : ses enfants s'intègrent au flux.
+dia-only est masqué (visible uniquement dans le diaporama Reveal.js).
+Doit être en enfant direct de `.prose`.
+*/
+.prose > dia-both,
+.prose > [data-dia=""],
+.prose > [data-diapositive=""] {
+  display: contents;
+}
+.prose > dia-only,
+.prose > [data-dia="seulement"],
+.prose > [data-diapositive="seulement"] {
+  display: none;
+}
+
+/* Table des matières */
+.prose #toc > ul { list-style: none; padding-inline-start: 0; }
+.prose #toc > ul > li { padding-inline-start: 0; }
+.prose #toc > ul > li::before { display: none; }
+.prose #toc > ul > li > a { display: none; } /* masque le niveau h1 */
+.prose #toc li:has(> a[href="#bibliography"]) { display: none; } /* exclut la section Références */
+
+/* h2 : 1. */
+.prose #toc > ul > li > ul {
+  list-style: none;
+  padding-inline-start: 0;
+  counter-reset: toc-h2;
+}
+.prose #toc > ul > li > ul > li {
+  padding-inline-start: 2.5rem;
+  counter-increment: toc-h2;
+}
+.prose #toc > ul > li > ul > li::before {
+  content: counter(toc-h2) ". ";
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 2.5rem;
+  background-color: transparent;
+  border-radius: 0;
+  color: var(--prose-couleur-puce, currentColor);
+}
+
+/* h3 : 1.2. */
+.prose #toc > ul > li > ul > li > ul {
+  list-style: none;
+  padding-inline-start: 1.5rem;
+  counter-reset: toc-h3;
+}
+.prose #toc > ul > li > ul > li > ul > li {
+  padding-inline-start: 2.5rem;
+  counter-increment: toc-h3;
+}
+.prose #toc > ul > li > ul > li > ul > li::before {
+  content: counter(toc-h2) "." counter(toc-h3) ". ";
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 2.5rem;
+  background-color: transparent;
+  border-radius: 0;
+  color: var(--prose-couleur-puce, currentColor);
+}
+
+/* Footnotes */
+.prose #footnotes {
+  font-size: var(--taille-police-smaller);
+}
+.prose .footnote-back {
+  font-size: 0.85rem;
+}
+
+/* Citation auteur-date : lien discret souligné en pointillés */
+.prose .citation-link, .prose .citation-link:visited {
+  color: var(--prose-couleur-refs);
+  text-decoration: none;
+  border-bottom: .15rem dotted currentColor;
+  cursor: pointer;
+}
+.prose .citation-link:hover {
+  color: var(--prose-couleur-refs-survol);
+  transition: color .15s;
+}
+
+/* Bibliographie (citeproc) */
+/* .prose #bibliography {
+  font-size: var(--taille-police-h2);
+}*/
+.prose #refs .csl-entry {
+  font-size: var(--taille-police-smaller);
+  padding-inline-start: 2em;
+  text-indent: -2em;
+  margin-block-end: 0.4em;
+}
+
+/* Entrée bibliographique mise en surbrillance après navigation via un appel */
+.prose .csl-entry.is-highlighted {
+  color: var(--prose-couleur-refs);
+}
+
+/* Bouton "↑ Retour à la lecture" — ajouté dynamiquement après navigation */
+.prose .citation-back {
+  display: block;
+  padding-inline-start: 2em;
+}
+.prose .citation-back-link, .prose .citation-back-link:visited {
+  display: inline-block;
+  text-indent: 0; /* annule le retrait suspendu hérité de .csl-entry — évite que le texte déborde hors du fond */
+  color: var(--prose-couleur-refs);
+  text-decoration: underline;
+  text-underline-position: under;
+  background-color: var(--violet-amethyste-100);
+  border-radius: .25em;
+  padding: .125em .25em;
+  line-height: 1.1;
+}
+.prose .citation-back-link:hover {
+  color: var(--prose-couleur-refs-survol);
+  transition: color .15s;
+}
+
+/* Tooltip bibliographique (appended to body, hors .prose) */
+.citation-tooltip {
+  /* Bornes du bloc prose en coordonnées viewport — mises à jour par JS (ResizeObserver) */
+  --prose-left:  .75rem;
+  --prose-right: calc(100vw - .75rem);
+  --x-offset: 3em;
+  /* Coordonnées de l'ancre — mises à jour par JS à chaque survol */
+  --tip-left: 0px;
+  --tip-y:    0px;
+
+  position: fixed;
+  left: 0;
+  top: 0;
+  /* Dans translate, 100% = propre largeur → borne droite = bord prose - largeur tooltip */
+  translate:
+    clamp(var(--prose-left), calc(var(--tip-left) + var(--x-offset)), calc(var(--prose-right) - 100%))
+    var(--tip-y);
+
+  z-index: 100;
+  max-width: min(35rem, calc(100vw - 2rem));
+  font-size: var(--taille-police-smaller, 0.875rem);
+  background-color: var(--couleur-fond, #fff);
+  border: .08em solid currentColor;
+  overflow: hidden;
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s;
+}
+.citation-tooltip.is-visible {
+  visibility: visible;
+  opacity: 1;
+  pointer-events: auto;
+}
+.citation-tooltip-content {
+  padding: 0.5em 0.75em;
+}
+.citation-tooltip-footer {
+  padding: 0.4em 0.75em;
+}
+.citation-tooltip-link {
+  color: var(--prose-couleur-refs, inherit);
+  text-decoration: none;
+}
+.citation-tooltip-link:hover {
+  color: var(--prose-couleur-refs-survol, inherit);
+  text-decoration: underline;
+}

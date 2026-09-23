@@ -1,0 +1,1297 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <title>Introduction à XQuery</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+
+    <!-- Métadonnées -->
+        <meta name="author" content="emchateau" />
+       
+    <!-- Gif transparent le plus petit qui soit, évite une requête inutile vers le serveur (et une erreur dans la console). -->
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=" />
+
+    <!-- Feuilles de style -->
+    <!-- Général -->
+    <link rel="stylesheet" href="style/general/reset.css" />
+    <link rel="stylesheet" href="style/general/variables.css" />
+    <link rel="stylesheet" href="style/general/global.css" />
+    <!-- Polices -->
+    <link rel="stylesheet" href="fonts/overused-grotesk/overused-grotesk.css" />
+    <!-- Dispositions de page -->
+    <link rel="stylesheet" href="style/layout/page-layout.css" />
+    <!-- Composants -->
+    <link rel="stylesheet" href="style/components/prose.css" />
+    <link rel="stylesheet" href="style/components/conteneur-diapositives.css" />
+    <!-- <link rel="stylesheet" href="style/components/hypothesis.css" />-->
+
+    <!-- Styleguide (demo only) -->
+    <link rel="stylesheet" href="style/components/styleguide.css" />
+
+    <link rel="stylesheet" href="lib/reveal.js-6.0.1/dist/reveal.css" />
+    <link
+      rel="stylesheet"
+      href="lib/reveal.js-6.0.1/dist/plugin/highlight/monokai.css"
+    />
+    <link rel="stylesheet" href="style/components/theme.reveal.css" />
+    <link rel="stylesheet" href="scripts/reframe/rf-bundle.css" />
+    <!-- <script src="scripts/hypothesis-config.js"></script>
+    <script async src="https://hypothes.is/embed.js"></script>-->
+  </head>
+  <body>
+    <div class="page-layout">
+      <header>
+        <!-- Logo etc. -->
+      </header>
+
+      <main class="page-layout__main">
+        <div class="page-layout__infra">Zone infra</div>
+
+        <article class="page-layout__content">
+          <div class="prose">
+            <h1>Introduction à XQuery</h1>
+
+            <details open class="conteneur-diapositives">
+              <summary class="conteneur-diapositives-etiquette">
+                Diapositives
+                <a
+                  href="?presentation"
+                  target="_blank"
+                  rel="noopener"
+                  style="float: right; font-size: 0.85em; color: inherit"
+                  >Présenter ↗</a
+                >
+              </summary>
+
+              <div class="reveal" style="width: 100%; aspect-ratio: 16 / 9">
+                <div class="slides">
+                  <!-- Diapositives insérées ici -->
+                </div>
+              </div>
+            </details>
+
+                        <p>
+              Le diaporama utilise la bibliothèque
+              <a href="https://revealjs.com/" target="_blank">Reveal.js</a>
+              (cliquez dans le cadre, puis appuyez sur la touche
+              <code>f</code> pour lancer le mode plein écran).
+            </p>
+
+                        <nav id="toc" role="doc-toc">
+              <h2>Sommaire</h2>
+              <ul>
+              <li><a href="#xpath" id="toc-xpath">XPath</a></li>
+              <li><a href="#rafraîchissements-xpath"
+              id="toc-rafraîchissements-xpath">02 | Rafraîchissements
+              XPath</br></a>
+              <ul>
+              <li><a href="#historique"
+              id="toc-historique">Historique</a></li>
+              <li><a
+              href="#un-langage-fonctionnel-qui-sappuie-sur-un-modèle-de-données"
+              id="toc-un-langage-fonctionnel-qui-sappuie-sur-un-modèle-de-données">Un
+              langage fonctionnel qui s’appuie sur un modèle de
+              données</a></li>
+              </ul></li>
+              <li><a href="#le-modèle-de-données-xml"
+              id="toc-le-modèle-de-données-xml">Le modèle de données
+              XML</a></li>
+              <li><a href="#les-nœuds-dans-le-modèle-xdm"
+              id="toc-les-nœuds-dans-le-modèle-xdm">Les nœuds dans le
+              modèle XDM</a>
+              <ul>
+              <li><a href="#contraintes-des-nœuds"
+              id="toc-contraintes-des-nœuds">Contraintes des
+              nœuds</a></li>
+              <li><a href="#ordre-du-document"
+              id="toc-ordre-du-document">Ordre du document</a></li>
+              <li><a
+              href="#sérialisation-arborescente-de-phares.tei.xml"
+              id="toc-sérialisation-arborescente-de-phares.tei.xml">Sérialisation
+              arborescente de phares.tei.xml</a>
+              <ul>
+              <li><a href="#enfant" id="toc-enfant">Enfant</a></li>
+              <li><a href="#parent" id="toc-parent">Parent</a></li>
+              <li><a href="#ancêtre" id="toc-ancêtre">Ancêtre</a></li>
+              <li><a href="#descendants"
+              id="toc-descendants">Descendants</a></li>
+              <li><a href="#sibling" id="toc-sibling">Sibling</a></li>
+              </ul></li>
+              <li><a href="#les-composants-du-modèle-de-données-xml"
+              id="toc-les-composants-du-modèle-de-données-xml">Les
+              composants du modèle de données XML</a>
+              <ul>
+              <li><a href="#le-modèle-xdm" id="toc-le-modèle-xdm">Le
+              modèle XDM</a></li>
+              <li><a href="#le-modèle-xdm" id="toc-le-modèle-xdm">Le
+              modèle XDM</a></li>
+              <li><a href="#le-modèle-xdm" id="toc-le-modèle-xdm">Le
+              modèle XDM</a></li>
+              <li><a href="#le-modèle-xdm" id="toc-le-modèle-xdm">Le
+              modèle XDM</a></li>
+              <li><a href="#valeur-textuelle"
+              id="toc-valeur-textuelle">Valeur textuelle</a></li>
+              </ul></li>
+              <li><a href="#les-expressions-xpath"
+              id="toc-les-expressions-xpath">Les expressions XPath</a>
+              <ul>
+              <li><a href="#les-types-dexpressions-xpath"
+              id="toc-les-types-dexpressions-xpath">Les types
+              d’expressions XPath</a></li>
+              <li><a href="#évaluation-dune-expression-xpath"
+              id="toc-évaluation-dune-expression-xpath">Évaluation d’une
+              expression XPath</a></li>
+              <li><a href="#types-xpath" id="toc-types-xpath">Types
+              XPath</a></li>
+              </ul></li>
+              <li><a href="#le-modèle-de-données-xml"
+              id="toc-le-modèle-de-données-xml">Le modèle de données
+              XML</a>
+              <ul>
+              <li><a href="#exemples"
+              id="toc-exemples">Exemples</a></li>
+              <li><a href="#les-types-définis-par-le-xml-data-model-xdm"
+              id="toc-les-types-définis-par-le-xml-data-model-xdm">Les
+              types définis par le XML Data Model (XDM)</a></li>
+              </ul></li>
+              <li><a href="#expressions-de-chemins"
+              id="toc-expressions-de-chemins">Expressions de
+              chemins</a></li>
+              <li><a href="#les-expressions-de-chemins"
+              id="toc-les-expressions-de-chemins">Les expressions de
+              chemins</a></li>
+              <li><a href="#les-axes-xpath" id="toc-les-axes-xpath">Les
+              axes XPath</a></li>
+              <li><a href="#notation-xpath"
+              id="toc-notation-xpath">Notation XPath</a>
+              <ul>
+              <li><a href="#notation-des-étapes-dun-chemin-xpath"
+              id="toc-notation-des-étapes-dun-chemin-xpath">Notation des
+              étapes d’un chemin XPath</a></li>
+              </ul></li>
+              <li><a href="#structure-dune-étape-de-chemin-xpath"
+              id="toc-structure-dune-étape-de-chemin-xpath">Structure
+              d’une étape de chemin XPath</a>
+              <ul>
+              <li><a href="#forme-dune-expression-xpath"
+              id="toc-forme-dune-expression-xpath">Forme d’une
+              expression XPath :</a></li>
+              </ul></li>
+              <li><a href="#notation-des-axes-axis-specifier"
+              id="toc-notation-des-axes-axis-specifier">Notation des
+              axes (<em>axis specifier</em>)</a></li>
+              <li><a
+              href="#test-du-type-de-nœuds-à-sélectionner-node-test"
+              id="toc-test-du-type-de-nœuds-à-sélectionner-node-test">Test
+              du type de nœuds à sélectionner (<em>node
+              test</em>)</a></li>
+              <li><a href="#exemples"
+              id="toc-exemples">Exemples</a></li>
+              <li><a href="#raccourcis"
+              id="toc-raccourcis">Raccourcis</a></li>
+              <li><a href="#exercices"
+              id="toc-exercices">Exercices</a></li>
+              <li><a href="#les-axes" id="toc-les-axes">Les axes</a>
+              <ul>
+              <li><a href="#les-axes-de-type-forward-axes"
+              id="toc-les-axes-de-type-forward-axes">Les axes de type
+              <em>forward axes</em></a></li>
+              <li><a href="#les-axes-de-type-forward-axes"
+              id="toc-les-axes-de-type-forward-axes">Les axes de type
+              <em>forward axes</em></a></li>
+              <li><a href="#les-axes-de-type-reverse-axes"
+              id="toc-les-axes-de-type-reverse-axes">Les axes de type
+              <em>reverse axes</em></a></li>
+              <li><a href="#les-axes-de-type-forward-axes"
+              id="toc-les-axes-de-type-forward-axes">Les axes de type
+              forward axes</a></li>
+              <li><a
+              href="#nota-un-attribut-nest-pas-le-fils-dun-élément-même-si-dans-xpath-on-peut-atteindre-lélément-depuis-lattribut-en-suivant-laxe-parent-etc."
+              id="toc-nota-un-attribut-nest-pas-le-fils-dun-élément-même-si-dans-xpath-on-peut-atteindre-lélément-depuis-lattribut-en-suivant-laxe-parent-etc.">Nota :
+              un attribut n’est pas le fils d’un élément ! même si dans
+              XPath on peut atteindre l’élément depuis l’attribut en
+              suivant l’axe parent, etc.</a></li>
+              <li><a href="#axes-child-parent-attribute"
+              id="toc-axes-child-parent-attribute">Axes child, parent,
+              attribute</a></li>
+              <li><a href="#axes-ancestor" id="toc-axes-ancestor">Axes
+              ancestor</a></li>
+              <li><a href="#axes-following-sibling-et-preceding-sibling"
+              id="toc-axes-following-sibling-et-preceding-sibling">Axes
+              following-sibling et preceding-sibling</a></li>
+              <li><a href="#axe-following" id="toc-axe-following">Axe
+              following</a></li>
+              </ul></li>
+              <li><a href="#prédicats"
+              id="toc-prédicats">Prédicats</a></li>
+              <li><a href="#les-fonctions-xpath"
+              id="toc-les-fonctions-xpath">Les Fonctions XPath</a></li>
+              <li><a href="#fonctions-dans-des-expressions-xpath"
+              id="toc-fonctions-dans-des-expressions-xpath">Fonctions
+              dans des expressions XPath</a></li>
+              <li><a href="#autres-fonction-utiles"
+              id="toc-autres-fonction-utiles">Autres fonction utiles</a>
+              <ul>
+              <li><a href="#les-opérateurs" id="toc-les-opérateurs">Les
+              opérateurs</a></li>
+              <li><a
+              href="#les-fonctions-booléennes-peuvent-vous-permettre-de-réaliser-des-tests-sur-des-arguments"
+              id="toc-les-fonctions-booléennes-peuvent-vous-permettre-de-réaliser-des-tests-sur-des-arguments">les
+              fonctions booléennes peuvent vous permettre de réaliser
+              des tests sur des arguments</a></li>
+              <li><a
+              href="#les-fonctions-numériques-peuvent-vous-permettre-des-réaliser-des-opérations-arithmétiques-sur-des-séquences-de-nœuds"
+              id="toc-les-fonctions-numériques-peuvent-vous-permettre-des-réaliser-des-opérations-arithmétiques-sur-des-séquences-de-nœuds">Les
+              fonctions numériques peuvent vous permettre des réaliser
+              des opérations arithmétiques sur des séquences de
+              nœuds</a></li>
+              </ul></li>
+              <li><a href="#ressources"
+              id="toc-ressources">Ressources</a>
+              <ul>
+              <li><a href="#standards"
+              id="toc-standards">Standards</a></li>
+              </ul></li>
+              <li><a href="#notes" id="toc-notes">Notes</a></li>
+              </ul></li>
+              </ul>
+            </nav>
+             <h1 id="xpath">XPath</h1>
+<dia-only state="centered">
+<h1 id="rafraîchissements-xpath">02 | Rafraîchissements XPath</br></h1>
+<p>ENS Lyon – septembre 2026</p>
+</dia-only>
+<dia-both>
+<blockquote>
+<p>XPath is a language for addressing parts of an XML document, designed
+to be used by both XSLT and XPointer</p>
+</blockquote>
+<blockquote>
+<p>The primary purpose of XPath is to address parts of an XML
+document.</p>
+</blockquote>
+<p><a href="http://www.w3.org/TR/xpath20/">XML Path Language 2.0,
+2003</a></p>
+</dia-both>
+<p>Comme le suggère cette citation, XPath a d’abord été conçu pour être
+utilisé au sein de langages dits hôtes ayant besoin d’identifier des
+portions précises dans un document. On utilise ainsi XPath avec XSLT
+pour sélectionner des nœuds, extraire des informations, ou encore
+effectuer des tests.</p>
+<p>Les expressions XPath peuvent aussi être utiles pour naviguer
+précisément dans des documents XML en créant des pointeurs hypertextes
+sophistiqués dans le contexte du langage XPointer.</p>
+<p>Plusieurs utilisations de XPath sont donc possibles - pour désigner
+des ensembles de nœuds dans une transformation XSLT ou lors d’une
+requête XQuery - pour contrôler la qualité d’un document XML
+(exploration, analyse, vérification) - pour paralléliser des textes</p>
+<dia-both>
+<h2 id="historique">Historique</h2>
+<ul>
+<li>1999 : première version du langage, immédiatement utilisée par
+SLT 1.0</li>
+<li>2007 : seconde version du langage spécifiée en 2007</li>
+<li>2010 : support des langages XSLT 2.0 et XQuery 1.0 (s’appuie sur XML
+Data Model publié la même année)<a href="#fn1" class="footnote-ref"
+id="fnref1" role="doc-noteref"><sup>1</sup></a></li>
+<li>2014 : Version 3 publiée en 2014, puis 3.1 en 2017</li>
+<li>Version 4 en cours</li>
+</ul>
+</dia-both>
+<p>La première version de XPath a été publiée en 1999 et fut
+immédiatement utilisée par XSLT 1.0.</p>
+<p>XPath est le premier langage de la famille XML à avoir opéré sur un
+<strong>modèle de données</strong> au sens d’un cadre formel permettant
+la représentation et la manipulation de données. La description de la
+version 1.0 de ce langage, publiée en 1999, contient en effet la
+description d’un modèle de données très simple où un document XML est
+représenté comme un arbre pouvant être composé de <strong>sept types de
+nœuds</strong>.</p>
+<p>La seconde version du langage, XPath 2.0, a été spécifiée en 2007 et
+a servi de support aux langages XSLT 2.0 et XQuery 1.0. Cette seconde
+version de XPath, s’appuie sur le XML Data Model publié en même temps
+que la spécification XPath 2.0.</p>
+<h2 id="un-langage-fonctionnel-qui-sappuie-sur-un-modèle-de-données">Un
+langage fonctionnel qui s’appuie sur un modèle de données</h2>
+<p>Une des caractéristiques essentielles du langage XPath, est qu’il
+s’appuie sur un modèle de données (XPath/XQuery à partir de la version
+2.0) dont la connaissance est essentielle pour une bonne compréhension
+du langage.</p>
+<p>Il s’agit d’un véritable langage fonctionnel typé. Ainsi,
+l’utilisateur manipule des expressions et non des instructions, et
+l’évaluation de ces expressions produit des valeurs appartenant à des
+types définis dans un système de types. La version 2.0 langage intègre
+le riche système de types de <a href="./nXMLSchema">XML Schema</a>.</p>
+<p>Après avoir examiné le modèle de données XML, nous aborderons les
+diverses expressions XPath et leur types, avant de nous concentrer sur
+des expressions servant à décrire des chemins pour sélectionner des
+ensembles de nœuds dans un arbre XML.</p>
+<dia-both state="intertitre" bg="#1a1a2e">
+<h1 id="le-modèle-de-données-xml">Le modèle de données XML</h1>
+</dia-both>
+<dia-both>
+<h1 id="les-nœuds-dans-le-modèle-xdm">Les nœuds dans le modèle XDM</h1>
+<ul>
+<li><code>document node</code> (nœud document)</li>
+<li><code>element node</code> (nœud élément)</li>
+<li><code>attribute node</code> (nœud attribut)</li>
+<li><code>comment node</code> (nœud commentaire)</li>
+<li><code>processing instruction node</code> (nœud instruction de
+traitement)</li>
+<li><code>text node</code> (nœud texte)</li>
+<li><code>namespace node</code> (nœud espace de nom)</li>
+</ul>
+<p>http://www.w3.org/TR/xpath-datamodel/</p>
+</dia-both>
+<p>Dans le XML Data Model (XDM) un document est une structure d’arbre
+qui peut être composée de <strong>sept types de nœuds</strong>. En
+abordant le modèle de données de XML, on monte en abstraction par
+rapport à ce que vous savez déjà peut-être de XML. La syntaxe XML décrit
+en réalité un modèle abstrait à partir duquel on va pouvoir travailler
+informatiquement.</p>
+<p>Ces <strong>nœud</strong> sont les sept types de nœuds définis dans
+le modèle de données XPath 1.0, à l’exception du nœud racine rebaptisé
+<code>document node</code> au lieu de <code>root node</code> :</p>
+<ul>
+<li><code>document node</code> (nœud document)</li>
+<li><code>element node</code> (nœud élément)</li>
+<li><code>attribute node</code> (nœud attribut)</li>
+<li><code>comment node</code> (nœud commentaire)</li>
+<li><code>processing instruction node</code> (nœud instruction de
+traitement)</li>
+<li><code>text node</code> (nœud texte)</li>
+<li><code>namespace node</code> (nœud espace de nom)</li>
+</ul>
+<p>http://www.w3.org/TR/xpath-datamodel/</p>
+<dia-both>
+<h2 id="contraintes-des-nœuds">Contraintes des nœuds</h2>
+<p>Les éléments d’un document XML bien formé répondent à un certain
+nombre de contraintes</p>
+<figure>
+<img src="images/contraintes.png" alt="diagramme UML" />
+<figcaption aria-hidden="true">diagramme UML</figcaption>
+</figure>
+</dia-both>
+<p>Les éléments d’un document XML bien formé répondent à plusieurs
+contraintes :</p>
+<ul>
+<li>un nœud document ne doit pas avoir de nœud père et peut avoir des
+nœuds fils qui peuvent être des nœuds élément, texte, commentaire, ou
+instruction de traitement</li>
+<li>un nœud élément peut avoir un nœud père qui doit être un nœud
+document ou élément et peut avoir des nœuds fils qui doivent être des
+nœuds espace de noms, attributs, élément, texte, commentaire ou
+instruction de traitement</li>
+<li>les nœuds fils d’un nœud document ou élément qui sont des nœuds
+élément, texte, commentaire ou instruction de traitement sont appelés
+les enfants de ce nœud</li>
+<li>un nœud document ou élément ne doit pas avoir deux enfants
+consécutifs qui sont des nœuds textes</li>
+<li>un nœud document ou élément ne doit pas avoir d’enfants qui sont des
+nœuds textes dont le contenu est vide</li>
+<li>un nœud espace de nom ou attribut peut avoir un nœud père qui doit
+être un nœud élément</li>
+<li>un nœud texte, commentaire ou instruction de traitement peut avoir
+un nœud père qui doit être un nœud élément ou document</li>
+</ul>
+<dia-both>
+<h2 id="ordre-du-document">Ordre du document</h2>
+<ul>
+<li>le nœud racine est le premier nœud après le nœud document</li>
+<li>les nœuds <code>element</code> précèdent leurs nœuds fils</li>
+<li>l’ordre relatif des nœuds frères entre eux est déterminé par leur
+ordre d’apparition dans la représentation balisée</li>
+<li>les nœuds <code>attribute</code> et <code>namespace</code> précèdent
+les nœuds fils de cet élément</li>
+<li>les nœuds <code>namespace</code> précèdent les nœuds
+<code>attribute</code></li>
+<li>l’ordre des nœuds <code>namespace</code> et <code>attributs</code>
+dépend de l’implantation</li>
+</ul>
+</dia-both>
+<p>Un document XML (ou un fragment de document) est composé d’une
+hiérarchie de nœuds. Chaque nœud a une identité et il existe un ordre du
+document.</p>
+<p>Autrement dit, les nœuds qui sont accessibles lors d’une session de
+travail sont munis d’un ordre, qu’on appelle <strong>ordre du
+document</strong>. Cet ordre est défini tel que correspondant à l’ordre
+dans lequel le premier caractère de la représentation XML de chaque nœud
+apparaît dans le document XML balisé (après expansion des entités
+générales).</p>
+<ul>
+<li>le nœud racine est le premier nœud element après le nœud document,
+il contient tous les autres éléments</li>
+<li>les nœuds <code>element</code> précèdent leurs nœuds fils</li>
+<li>l’ordre relatif des nœuds frères entre eux est déterminé par leur
+ordre d’apparition dans la représentation balisée <strong>(autrement
+dit, les nœuds descendants d’un nœud apparaissent avant le nœud
+frère)</strong></li>
+<li>les nœuds <code>attribute</code> et <code>namespace</code> précèdent
+les nœuds fils de cet élément</li>
+<li>les nœuds namespace précèdent les nœuds <code>attribute</code></li>
+<li>l’ordre des nœuds <code>namespace</code> et <code>attribute</code>
+dépend de l’implantation</li>
+</ul>
+<p>Exercice : Produire la représentation arborescente de <a
+href="./exemplesTEI/phares.tei.xml">phares.tei.xml</a></p>
+<pre class="xml"><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;body xmlns=&quot;http://www.tei-c.org/ns/1.0&quot; n=&quot;spleenEtIdeal&quot;&gt;
+  &lt;div type=&quot;longPoem&quot;&gt;
+    &lt;head&gt;Les Phares&lt;/head&gt;
+    &lt;lg type=&quot;stanza&quot;&gt;
+&lt;l n=&quot;1&quot;&gt;Rubens, fleuve d’oubli, jardin de la paresse,&lt;/l&gt;
+&lt;l n=&quot;2&quot;&gt;Oreiller de chair fraîche où l’on ne peut aimer,&lt;/l&gt;
+&lt;l n=&quot;3&quot;&gt;Mais où la vie afflue et s’agite sans cesse,&lt;/l&gt;
+&lt;l n=&quot;4&quot;&gt;Comme l’air dans le ciel et la mer dans la mer ;&lt;/l&gt;
+&lt;!-- nœud commentaire --&gt;
+    &lt;/lg&gt;
+    &lt;lg type=&quot;stanza&quot;&gt;
+&lt;l n=&quot;5&quot;&gt;Léonard de Vinci, miroir profond et sombre,&lt;/l&gt;
+&lt;l n=&quot;6&quot;&gt;Où des anges charmants, avec un doux souris&lt;/l&gt;
+&lt;l n=&quot;7&quot;&gt;Tout chargé de mystère, apparaissent à l’ombre&lt;/l&gt;
+&lt;l n=&quot;8&quot;&gt;Des glaciers et des pins qui ferment leur pays ;&lt;/l&gt;
+    &lt;/lg&gt;
+    &lt;gap reason=&quot;sampling&quot; quantity=&quot;9&quot; unit=&quot;stanza&quot;/&gt;
+  &lt;/div&gt;
+  &lt;div type=&quot;shortPoem&quot;&gt;
+    &lt;head&gt;La Muse malade&lt;/head&gt;
+    &lt;gap reason=&quot;sampling&quot; quantity=&quot;4&quot; unit=&quot;stanza&quot;/&gt;
+  &lt;/div&gt;
+&lt;/body&gt;</code></pre>
+<dia-both>
+<h2 id="sérialisation-arborescente-de-phares.tei.xml">Sérialisation
+arborescente de <a
+href="./exemplesTEI/phares.tei.xml">phares.tei.xml</a></h2>
+<figure>
+<img src="images/diagram01.svg" alt="solution" />
+<figcaption aria-hidden="true">solution</figcaption>
+</figure>
+</dia-both>
+<p>On peut décrire la relation hiérarchique entre les nœuds d’un
+document XML en faisant l’analogie avec une famille.</p>
+<h3 id="enfant">Enfant</h3>
+<ul>
+<li>Un élément peut avoir zéro, un ou plusieurs autres éléments enfants.
+Il peut également avoir des enfants texte, commentaire, et instruction
+de traitement.</li>
+<li>Les attributs ne sont pas considérés comme les enfants d’un
+élément</li>
+<li>Un nœud document peut avoir un élément fils (celui qui contiendra
+tous les autres) mais aussi des fils commentaire, ou instruction de
+traitement.</li>
+</ul>
+<h3 id="parent">Parent</h3>
+<p>Le parent d’un élément est soit un autre élément soit un nœud
+document. Le parent d’un attribut est l’élément qui le porte.</p>
+<p>Attention ! Même si les attributs ne sont pas considérés comme fils
+des éléments, les éléments sont les parents des attributs !</p>
+<h3 id="ancêtre">Ancêtre</h3>
+<p>Les ancêtres sont les nœuds parents, les parents des parents,
+etc.</p>
+<h3 id="descendants">Descendants</h3>
+<p>Les descendants sont les enfants, petits-enfants, et tous les
+descendants d’un nœud.</p>
+<h3 id="sibling">Sibling</h3>
+<p>Les siblings d’un nœuds sont les autres enfants de son parent. Les
+attributs ne sont pas considéré comme des siblings.</p>
+<dia-both>
+<h2 id="les-composants-du-modèle-de-données-xml">Les composants du
+modèle de données XML</h2>
+<figure>
+<img src="images/xmlSimplifiedXDM.svg" alt="Modèle XDM" />
+<figcaption aria-hidden="true">Modèle XDM</figcaption>
+</figure>
+</dia-both>
+<p>Une autre manière possible de visualiser les différentes composantes
+définies par le modèle de données XML.</p>
+<p>détailler séquence, item, etc.</p>
+<!-- background-image: url(../images/xmlSimplifiedXDM.svg) -->
+<p>Eric Van der List. Simplified XDM.
+https://xmllondon.com/2014/slides/vlist/index.html#/step-16 CC-By
+4.0</p>
+<dia-both>
+<h3 id="le-modèle-xdm">Le modèle <a
+href="http://www.w3.org/TR/xpath-datamodel/">XDM</a></h3>
+<h4 id="les-nœuds-ont-une-identité">Les nœuds ont une identité :</h4>
+<p>Chaque nœud possède une identité unique. On peut avoir deux nœuds
+avec le même nom et le même contenu dans le document source, mais cela
+ne signifie pas qu’ils auront la même identité. L’identité est unique
+pour chaque nœud, elle est affectée par le processeur.</p>
+</dia-both>
+<dia-both>
+<h3 id="le-modèle-xdm">Le modèle <a
+href="http://www.w3.org/TR/xpath-datamodel/">XDM</a></h3>
+<h4 id="aux-nœuds-sont-attachées-différentes-propriétés">Aux nœuds sont
+attachées différentes propriétés :</h4>
+<ul>
+<li>Les éléments et les attributs possèdent un nom. Ces noms sont
+accessibles à l’aide des fonctions <code>node-name()</code>,
+<code>name()</code>, <code>local-name()</code></li>
+<li>Pour chaque type de nœud, il est possible de déterminer ce que l’on
+appelle sa <strong>valeur de chaîne</strong> (<code>string value</code>)
+qui correspond schématiquement à son contenu textuel. On peut accéder à
+la valeur textuelle d’un élément avec la fonction
+<code>string()</code></li>
+<li>On peut encore extraire d’un nœud sa <strong>valeur typée</strong>
+(<code>typed value</code>), son nom qualifié, etc.</li>
+</ul>
+</dia-both>
+<dia-both>
+<h3 id="le-modèle-xdm">Le modèle <a
+href="http://www.w3.org/TR/xpath-datamodel/">XDM</a></h3>
+<h4 id="identité-dun-nœud">identité d’un nœud</h4>
+<p>Les nœuds ont une identité. Deux nœuds créés par deux expressions
+différentes sont distincts même s’ils ont le même nom, les mêmes fils,
+etc.</p>
+<p>Chaque nœud possède une identité unique. On peut avoir deux nœuds
+avec le même nom et le même contenu dans le document source, mais cela
+ne signifie pas qu’ils auront la même identité. L’identité est unique
+pour chaque nœud, elle est affectée par le processeur.</p>
+</dia-both>
+<dia-both>
+<h3 id="le-modèle-xdm">Le modèle <a
+href="http://www.w3.org/TR/xpath-datamodel/">XDM</a></h3>
+<h4 id="aux-nœuds-sont-attachées-différentes-propriétés-1">Aux nœuds
+sont attachées différentes propriétés :</h4>
+<ul>
+<li>nom</li>
+<li>valeur textuelle</li>
+<li>valeur typée</li>
+</ul>
+</dia-both>
+<p>En outre, les éléments et les attributs possèdent un nom. Ces noms
+sont accessibles à l’aide des fonctions <code>node-name()</code>,
+<code>name()</code>, <code>local-name()</code></p>
+<h3 id="valeur-textuelle">Valeur textuelle</h3>
+<p>Par exemple, pour chaque type de nœud, il est possible de déterminer
+ce que l’on appelle sa valeur de chaîne (<code>string value</code>) qui
+correspond schématiquement à son contenu textuel.</p>
+<p>Les nœuds peuvent avoir deux types de valeur, une valeur de chaîne et
+une valeur typée. Tous les nœuds ont un contenu textuel (string value).
+La valeur textuelle d’un élément est la concaténation des données
+caractères de cet élément et de ses descendants.</p>
+<p>On peut accéder à la valeur textuelle d’un élément avec la fonction
+<code>string()</code></p>
+<p>On peut encore extraire d’un nœud sa valeur typée
+(<code>typed value</code>), son nom qualifié, etc.</p>
+<p>Globalement : se souvenir qu’un nœud possède un nom, et une valeur
+textuelle à laquelle on pourra accéder à l’aide d’une expression
+XPath</p>
+<dia-both state="intertitre" bg="#1a1a2e">
+<h2 id="les-expressions-xpath">Les expressions XPath</h2>
+</dia-both>
+<dia-both>
+<h3 id="les-types-dexpressions-xpath">Les types d’expressions XPath</h3>
+<p>XPath permet d’écrire des <strong>expressions de chemin</strong>
+(<em>path expressions</em>) qui permettent de sélectionner des fragments
+d’un document XML.</p>
+<p>Mais les expressions XPath permettent aussi : - d’effectuer des
+<strong>calculs</strong> sur le contenu des nœuds sélectionnés, -
+d’écrire des <strong>tests</strong> pour sélectionner des nœuds, -
+etc.</p>
+</dia-both>
+<dia-both>
+<h3 id="évaluation-dune-expression-xpath">Évaluation d’une expression
+XPath</h3>
+<p>En XPath 2.0, toutes les valeurs manipulées sont des
+<strong>séquences</strong> (<em>sequences</em>).</p>
+<ul>
+<li>Une séquence est une collection ordonnée de zéro ou plusieurs
+items.</li>
+<li>Un <strong>item</strong> appartenant à une séquence est soit un nœud
+soit une valeur atomique.</li>
+</ul>
+</dia-both>
+<dia-both>
+<h3 id="types-xpath">Types XPath</h3>
+<p>Une valeur atomique est une valeur appartenant à l’espace de valeur
+d’un <strong>type atomique</strong>.</p>
+<p>XPath 2.0 reconnaît comme types atomiques les types atomiques
+primitifs de <a href="http://www.w3.org/TR/xmlschema-2/">XML Schema</a>,
+ainsi que plusieurs types qui en dérivent.</p>
+<p>La valeur d’une expression XPath 2.0 est toute séquence autorisée par
+le modèle de données.</p>
+</dia-both>
+<dia-both>
+</dia-both>
+<dia-both>
+<h2 id="le-modèle-de-données-xml">Le modèle de données XML</h2>
+<p>Le <a href="https://www.w3.org/TR/xpath-datamodel-31/">modèle de
+données XML</a> (<em>XML Data Model</em>)</p>
+</dia-both>
+<!-- @todo ajouter diagrammes -->
+<dia-both>
+<h3 id="exemples">Exemples</h3>
+<ul>
+<li><p><code>12</code> est une <strong>expression littérale</strong>
+dénotant une <strong>valeur atomique</strong> de type
+<code>xs:integer</code></p></li>
+<li><p><code>15.5</code> est une <strong>expression littérale</strong>
+dénotant une <strong>valeur atomique</strong> de type
+xs:decimal</p></li>
+<li><p><code>1, 2</code> est une expression construisant une
+<strong>séquence</strong> de deux <strong>valeurs atomiques</strong> de
+type <code>xs:integer</code></p></li>
+<li><p><code>auteur = "Dupont"</code> est <strong>expression
+booléenne</strong> dont la valeur est de type
+<code>xs:boolean</code></p></li>
+</ul>
+</dia-both>
+<p>(En programmation informatique, une <strong>valeur littérale</strong>
+est une valeur donnée explicitement dans le code source d’un
+programme)</p>
+<p>À partir de XPath 2.0, l’utilisation d’un système de types rigoureux
+a de nombreux avantages. Il offre notamment la possibilité de détecter
+des erreurs lors d’une phase d’analyse statique. Mais il peut poser des
+problèmes de compatibilité avec XPath 1.0, bien qu’ayant été conçu pour
+être compatible, les modèles de données présentent plusieurs différences
+notables.</p>
+<dia-both>
+<h3 id="les-types-définis-par-le-xml-data-model-xdm">Les types définis
+par le XML Data Model (XDM)</h3>
+<pre class="xquery"><code>&#39;string&#39; (: chaîne de caractères :)</code></pre>
+<pre class="xquery"><code>1 (: entier :)</code></pre>
+<pre class="xquery"><code>1 + 1 + 1 (: somme :)</code></pre>
+<pre class="xquery"><code>1, 2, 3 (: séquence :)</code></pre>
+</dia-both>
+<p>Comme nous venons de le voir, XPath permet d’écrire différents types
+d’expressions</p>
+<h2 id="expressions-de-chemins">Expressions de chemins</h2>
+<p>Comme nous venons de le voir, XPath permet d’écrire différents types
+d’expressions (arithmétiques, booléennes, etc.).</p>
+<ul>
+<li>arithmétiques ex. <code>1 + 2</code></li>
+<li>booléennes ex. <code>true()</code></li>
+<li>etc.</li>
+</ul>
+<p>Parmi ces expressions, les expressions de chemins
+(<code>path expressions</code>) représentent le cœur de ce langage dans
+la mesure où elles permettent de <strong>sélectionner une séquence de
+nœuds</strong> en spécifiant un chemin à suivre à partir d’un point de
+départ (la racine ou un autre nœud de la structure)</p>
+<dia-both>
+<h2 id="les-expressions-de-chemins">Les expressions de chemins</h2>
+<p>Pour comprendre cette notion de chemin, on peut faire l’analogie avec
+d’autres structures hiérarchiques comme les systèmes de fichiers Unix où
+il est nécessaire de pouvoir noter le chemin menant à un fichier ou un
+groupe de fichiers spécifiques.</p>
+<p>Chemin absolu</p>
+<pre class="bash"><code>    /Users/emmanuelchateau/formENC2014/xpath01.tei.xml</code></pre>
+<p>Chemin relatif</p>
+<pre class="bash"><code>    formENC2014/xpath01.tei.xml</code></pre>
+<p>Par exemple, le système de fichiers, dont la racine a pour nom
+<code>/</code>.</p>
+</dia-both>
+<p>Dans ce système, un fichier est désigné par un nom qui correspond au
+chemin (<em>path</em>) que l’on doit suivre dans la structure pour
+atteindre ce fichier.</p>
+<p>Le chemin peut partir de la racine, on parle alors d’un chemin
+absolu. Ou il peut partir d’un autre point du système, on parle dans ce
+cas d’un chemin relatif, ce chemin est dit relatif car son
+interprétation dépend de l’endroit où l’on se trouve.</p>
+<p>Dans un chemin Unix, chaque pas (ou étape) est séparé par le
+caractère / qui permet de passer d’un niveau de la structure à
+l’autre.</p>
+<p>Par exemple, le chemin absolu :
+<code>/Users/emmanuelchateau/formENC2014/xpath01.tei.xml</code> désigne,
+le fichier <code>xpath01.tei.xml</code> que l’on peut atteindre en
+partant de la racine puis en passant successivement par les répertoires
+Users, emmanuelchateau et formENC2014.</p>
+<p>L’interpréation de <code>formENC2014/xpath01.tei.xml</code> n’est,
+quant à elle, pas unique. Elle dépend de l’endroit où l’on se trouve
+quand l’on saisit ce chemin. Si l’on se trouve dans le répertoire
+<code>/Users/emmanuelchateau</code>, il désigne le même fichier que le
+chemin absolu précédent. Mais, si l’on se trouve dans le répertoire usr
+et que ce répertoire contenait aussi des répertoires
+<code>emmanuelchateau</code> et <code>formENC2014</code>, et un fichier
+également nommé <code>xpath01.tei.xml</code>, alors ce chemin relatif
+désignerait un fichier différent.</p>
+<p>Cette analogie avec les systèmes de fichier présente cependant des
+limites.</p>
+<ul>
+<li>Tout d’abord, XPath est destiné à manipuler des structures XML
+composées de types de nœuds (éléments, attributs, commentaires, textes,
+instruction de traitements, etc.) bien plus variées que les seuls
+fichiers et répertoires d’un système de fichiers.</li>
+<li>Enfin, les concepteurs de XPath ont développé des mécanismes de
+parcours beaucoup plus sophistiqués que la simple navigation père/fils
+que l’on rencontre dans les systèmes de fichiers. Cette précision dans
+l’identification repose sur la notion d’axes XPath.</li>
+</ul>
+<p>C’est maintenant ce que nous allons voir !</p>
+<dia-both>
+<h2 id="les-axes-xpath">Les axes XPath</h2>
+<p>Sérialisation arborescente de <a
+href="./exemplesTEI/phares.tei.xml">phares.tei.xml</a></p>
+<figure>
+<img src="images/diagram01.svg" alt="solution" />
+<figcaption aria-hidden="true">solution</figcaption>
+</figure>
+</dia-both>
+<p>Avant tout, il est très important de comprendre que pour qu’une
+expression XPath puisse opérer sur un document XML, ce dernier doit au
+préalable être traduit en une instance de ce modèle de donnée.</p>
+<p>Plusieurs sérialisation d’un document XML sont possibles. La
+représentation graphique d’un document XML peut nous permettre de mieux
+comprendre les axes.</p>
+<p>Tout à l’heure nous avons représenté dans cet arbre les éléments du
+documents sous la forme suivante :</p>
+<ul>
+<li>nœud éléments par des carrés</li>
+<li>nœud attributs par des ovales</li>
+<li>nœud de type texte sans bordure</li>
+<li>les relations père/fils entre les nœuds sont notées par un trait en
+gras</li>
+<li>les relations entre un élément et son attribut sont notées par un
+trait pointillé</li>
+</ul>
+<p>C’est à partir de cet arbre que l’on va examiner les différents axes
+spécifiés dans le modèle de données.</p>
+<p>En XPath, on peut effectuer des déplacements selon des axes
+variés.</p>
+<p>Par exemple, depuis le nœud <code>&lt;lg&gt;</code> au milieu de la
+diapositive qui nous sert de contexte initial, on pourrait faire un pas
+vers :</p>
+<ul>
+<li>le nœud père <code>&lt;div&gt;</code>, on utilise alors l’axe
+parent</li>
+<li>le nœud fils <code>&lt;l&gt;</code>, on utilise alors l’axe
+child</li>
+<li>le nœud attribut type, on utilise alors l’axe attribut</li>
+<li>le nœud frère <code>&lt;lg&gt;</code> qui le précède, on utilise
+alors l’axe preceding-sibling</li>
+<li>etc.</li>
+</ul>
+<h2 id="notation-xpath">Notation XPath</h2>
+<dia-both>
+<h3 id="notation-des-étapes-dun-chemin-xpath">Notation des étapes d’un
+chemin XPath</h3>
+<p>Un chemin peut se composer de plusieurs étapes, ou pas (<em>location
+steps</em>).</p>
+<ul>
+<li>Chaque étape est séparée de la précédente par un caractère
+<code>/</code></li>
+<li>Par convention, on désigne le nœud document avec le caractère
+<code>/</code>.</li>
+<li>On distingue ainsi les chemins absolus, partant de cette racine, des
+chemins relatifs.</li>
+</ul>
+<pre class="xpath"><code>  /étape1/étape2/.../étapeN</code></pre>
+<pre class="xpath"><code>  étape1/étape2/.../étapeN</code></pre>
+</dia-both>
+<dia-both>
+<h2 id="structure-dune-étape-de-chemin-xpath">Structure d’une étape de
+chemin XPath</h2>
+<p>Pour chaque étape, on peut préciser :</p>
+<ul>
+<li><p>dans quelle direction on souhaite se déplacer (<em>axis
+specifier</em>)</p></li>
+<li><p>quels nœuds ou types de nœuds particuliers (éléments, attributs,
+commentaires, etc.) on souhaite identifier sur cet axe (<em>test
+node</em>)</p></li>
+<li><p>éventuellement, un ou plusieurs <em>prédicats</em> qui permettent
+de filtrer l’ensemble de nœud désigné par les indications
+précédentes</p></li>
+</ul>
+<p>Ces prédicats prennent la forme d’une expression booléenne</p>
+</dia-both>
+<dia-both>
+<h3 id="forme-dune-expression-xpath">Forme d’une expression XPath :</h3>
+<pre class="xpath"><code>axe::testNode[prédicat]/.../axe::testNode[prédicat][...]</code></pre>
+</dia-both>
+<dia-both>
+<h2 id="notation-des-axes-axis-specifier">Notation des axes (<em>axis
+specifier</em>)</h2>
+<p>Ces axes sont introduits en écrivant le nom de l’axe suivi du
+délimiteur <code>::</code></p>
+<pre class="xpath"><code>child::</code></pre>
+<p>sert par exemple à noter l’axe fils</p>
+<pre class="xpath"><code>ancestor::</code></pre>
+<p>sert par exemple à noter l’axe des ancêtres</p>
+</dia-both>
+<dia-both>
+<h2 id="test-du-type-de-nœuds-à-sélectionner-node-test">Test du type de
+nœuds à sélectionner (<em>node test</em>)</h2>
+<p>Cette composante d’une étape sert à préciser quels nœuds ou types de
+nœuds particuliers on souhaite identifier sur un axe.</p>
+<p>On peut soit indiquer un nom précis (<code>lg</code>,
+<code>div</code>), soit être plus générique et utiliser une des
+expressions suivantes : - <code>text()</code> sélectionne n’importe quel
+nœud de type texte - <code>node()</code> sélectionne n’importe quel nœud
+de type quelconque - <code>comment()</code> sélectionne n’importe quel
+nœud de type commentaire - <code>processing-instruction()</code>
+sélectionne n’importe quel nœud de type instruction de traitement</p>
+<ul>
+<li><code>*</code> sélectionne un nœud de nom quelconque de type
+<code>element</code> sur un axe permettant de sélectionner des éléments,
+ou de type attribut sur l’axe attribute, ou de type espace de nom sur
+l’axe namespace</li>
+</ul>
+</dia-both>
+<dia-both>
+<h2 id="exemples">Exemples</h2>
+<p>En conséquence que signifient les expressions suivantes ?</p>
+<pre class="xpath"><code>/child::l
+child::l
+div/attribute::type</code></pre>
+</dia-both>
+<dia-both>
+<h2 id="raccourcis">Raccourcis</h2>
+<p>En pratique, on peut utiliser une notation abrégée qui permet
+d’alléger l’écriture des chemins.</p>
+<ul>
+<li>Comme l’axe fils, est l’axe par défaut, on peut écrire
+indifféremment <code>child::lg</code> ou <code>lg</code></li>
+<li><code>//</code> équivaut à
+<code>/descendant-or-self::node()/</code></li>
+<li><code>.</code> désigne le nœud contexte ou
+<code>self::node()</code></li>
+<li>l’axe des attributs peut être abrégé en <code>@</code> on écrit
+indifféremment <code>attribute::type</code> ou <code>@type</code></li>
+</ul>
+<p><strong>Rappels :</strong> -<code>/</code>, désigne le nœud document
+au début d’une expression - <code>*</code> sélectionne un nœud de nom
+quelconque de type <code>element</code> sur un axe permettant de
+sélectionner des éléments, ou de type <code>attribut</code> sur l’axe
+<code>attribute</code>, ou de type espace de nom sur l’axe
+<code>namespace</code></p>
+</dia-both>
+<dia-both>
+<h2 id="exercices">Exercices</h2>
+<p>En conséquence, que signifient les expressions suivantes ?</p>
+<pre class="xpath"><code>/*
+
+div/*
+
+div/*/@*
+
+//*</code></pre>
+</dia-both>
+<h2 id="les-axes">Les axes</h2>
+<p>XPath distingue ainsi plusieurs catégories d’axes de déplacement dans
+l’abre XML.</p>
+<dia-both>
+</dia-both>
+<dia-both>
+<h3 id="les-axes-de-type-forward-axes">Les axes de type <em>forward
+axes</em></h3>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th style="text-align: left;">axe</th>
+<th style="text-align: left;">signification</th>
+<th style="text-align: left;">types de noeud</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>child</code> </td>
+<td style="text-align: left;">fils du nœud contexte</td>
+<td style="text-align: left;"><code>element</code>, <code>text</code>,
+<code>comment</code>, <code>processing instruction</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>descendant</code> </td>
+<td style="text-align: left;">fils, petits-fils et tous les descendants
+du nœud contexte</td>
+<td style="text-align: left;"><code>element</code>, <code>text</code>,
+<code>comment</code>, <code>processing instruction</code></td>
+</tr>
+</tbody>
+</table>
+</dia-both>
+<ul>
+<li><p><code>child</code> : sélectionne tous les enfants du nœud
+contexte, dans l’ordre du document. L’axe child ne sélectionne rien pour
+tous les nœuds qui ne sont ni un nœud document ni un nœud élément.
+Rappel : les enfants d’un nœud élément n’incluent pas ses attributs ou
+espaces de noms, seulement le nœuds textuels, les nœuds de type élément,
+instruction de traitement et commentaire.</p></li>
+<li><p><code>descendant</code> : sélectionne tous les enfants du nœuds
+contexte et leurs enfants, et ainsi de suite récursivement dans l’ordre
+du document. Si le nœud contexte est un élément, l’axe descendant
+contient tous les nœuds texte, élément, commentaire, et instruction de
+traitement qui apparaissent dans le document source à l’intérieur des
+balises de cet élément.</p></li>
+</ul>
+<dia-both>
+<h3 id="les-axes-de-type-forward-axes">Les axes de type <em>forward
+axes</em></h3>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th style="text-align: left;">axe</th>
+<th style="text-align: left;">signification</th>
+<th style="text-align: left;">types de noeud</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>descendant-or-self</code> </td>
+<td style="text-align: left;">qui descendent du nœud contexte ainsi que
+le nœud contexte lui-même</td>
+<td style="text-align: left;"><code>element</code>, <code>text</code>,
+<code>comment</code>, <code>processing-instruction</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>following</code> </td>
+<td style="text-align: left;">frères droits du nœud contexte (à
+l’exception des descendants)</td>
+<td style="text-align: left;"><code>element</code>, <code>texte</code>,
+<code>comment</code>, <code>processing instruction</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>following-sibling</code> </td>
+<td style="text-align: left;">situés après le nœud contexte (avec leurs
+descendants)</td>
+<td style="text-align: left;"><code>element</code>, <code>text</code>,
+<code>comment</code>, <code>processing instruction</code></td>
+</tr>
+</tbody>
+</table>
+</dia-both>
+<ul>
+<li><p><code>descendant-of-self</code> : idem, à la différence que le
+premier nœud sélectionné est le nœud contexte.</p></li>
+<li><p>following` : sélectionne tous les nœuds qui apparaissent après le
+nœud contexte dans l’ordre du document, avec leurs descendants, en
+excluant les descendants du nœuds contexte.</p></li>
+</ul>
+<p>Si le nœud d’origine est un nœud element, l’axe comporte tous les
+nœuds texte, élément, commentaire, et instruction de traitement du
+document qui débute après la balise fermente du nœud contexte.</p>
+<p>L’axe following ne contiendra jamais de nœuds attributs ou d’espace
+de noms.</p>
+<ul>
+<li><code>following-sibling</code> : Sélectionne tous les nœuds frères
+qui suivent le nœud contexte dans l’ordre du document et qui sont les
+enfants du même nœud parent.</li>
+</ul>
+<p>Si le nœud contexte est un nœud racine, un nœud attribut, ou espace
+de noms, alors l’axe following-sibling sera toujours vide.</p>
+<dia-both>
+<p>axe | signification | types de noeud :–|:–|:– <code>attribute</code> 
+| attribut du nœud contexte| <code>namespace</code>  | espace de nom du
+noeud contexte| <code>processing instruction</code>| qui descendent du
+nœud contexte|</p>
+</dia-both>
+<ul>
+<li><p><code>attribute</code> : si le nœud contexte est un élément, cet
+axe sélectionne tous ses nœuds attributs, dans un ordre arbitraire.
+Sinon, il ne sélectionne rien.</p></li>
+<li><p><code>namespace</code> : si le nœud d’origine est un élément, cet
+axe sélectionne tous les nœuds d’espace de nom qui sont dans la portée
+de cet élément dans un ordre arbitraire.</p></li>
+</ul>
+<dia-both>
+<h3 id="les-axes-de-type-reverse-axes">Les axes de type <em>reverse
+axes</em></h3>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 14%" />
+<col style="width: 45%" />
+<col style="width: 40%" />
+</colgroup>
+<thead>
+<tr>
+<th style="text-align: left;">axe</th>
+<th style="text-align: left;">signification</th>
+<th style="text-align: left;">types de noeud</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>parent</code></td>
+<td style="text-align: left;">père du nœud contexte</td>
+<td style="text-align: left;"><code>element</code>,
+<code>document</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>ancestor</code></td>
+<td style="text-align: left;">ancêtres du nœud contexte (parent du nœud
+contexte, ou parent du partent, etc.)</td>
+<td style="text-align: left;"><code>element</code>,
+<code>document</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>ancestor-or-self</code></td>
+<td style="text-align: left;">ancêtres du nœud contexte ainsi que le
+nœud contexte lui-même</td>
+<td style="text-align: left;"><code>element</code>,
+<code>document</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>preceding</code></td>
+<td style="text-align: left;">situés avant le nœud contexte (à
+l’exclusion des nœuds ancêtres)</td>
+<td style="text-align: left;"><code>element</code>, <code>text</code>,
+<code>comment</code>, <code>processing instruction</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>preceding-sibling</code></td>
+<td style="text-align: left;">frères gauches du nœud contexte, et tous
+leurs descendants</td>
+<td style="text-align: left;"><code>element</code>, <code>text</code>,
+<code>comment</code>, <code>processing instruction</code></td>
+</tr>
+</tbody>
+</table>
+</dia-both>
+<p>XPath fournit enfin un axe particulier nommé <code>self</code> qui
+permet de sélectionner le nœud servant de contexte lui-même.</p>
+<h3 id="les-axes-de-type-forward-axes">Les axes de type forward
+axes</h3>
+<p>XPath distingue également une catégorie d’axe reverse axes dont la
+particularité est de ne pouvoir supporter un déplacement que depuis le
+nœud qui sert de contexte, ou des nœuds situés avant ce nœud dans
+l’ordre du document :</p>
+<ul>
+<li><p><code>parent</code> : cet axe sélectionne un seul nœud parent du
+õud contexte. Si le nœud contexte est un nœud document, l’axe parent est
+vide.</p></li>
+<li><p><code>ancestor</code> : sélectionne tous les nœuds qui sont les
+ancêtres du nœud contexte, dans l’ordre inverse du document, jusqu’au
+nœud document.</p></li>
+<li><p><code>ancestor-or-self</code> : sélectionne les mêmes nœuds que
+l’axe ancestor mais en débutant par le nœud contexte plutôt que par son
+parent.</p></li>
+<li><p><code>preceding</code> : sélectionne tous les nœuds qui
+apparaissent avant le nœud contexte en excluant ses ancêtres, dans
+l’ordre inverse du document.</p></li>
+</ul>
+<p>Si le nœud contexte est un élément, l’axe contient tous les nœuds
+texte, élément, commentaires et instruction de traitement qui se
+terminent avant la balise ouvrante de l’élement contexte dans le
+document.</p>
+<p>L’axe ne contiendra jamais d’attribut ou de nœud espace de nom.</p>
+<ul>
+<li><code>preceding-sibling</code> : tous les nœuds qui précèdent le
+nœud contexte et qui sont les enfants du même parent dans l’ordre
+inverse du document, avec tous leurs descendants.</li>
+</ul>
+<p>Toujours vide depuis un nœud attribut ou espace de nom.</p>
+<p>XPath fournit enfin un axe particulier nommé <code>self</code></p>
+<ul>
+<li><code>self</code> : sélectionne un nœud unique, le nœud contexte
+lui-même. Cet axe n’est jamais vide.</li>
+</ul>
+<h3
+id="nota-un-attribut-nest-pas-le-fils-dun-élément-même-si-dans-xpath-on-peut-atteindre-lélément-depuis-lattribut-en-suivant-laxe-parent-etc.">Nota :
+un attribut n’est pas le fils d’un élément ! même si dans XPath on peut
+atteindre l’élément depuis l’attribut en suivant l’axe parent, etc.</h3>
+<dia-both>
+<h3 id="axes-child-parent-attribute">Axes child, parent, attribute</h3>
+<figure>
+<img src="images/diagramAxes01.svg" alt="axes1" />
+<figcaption aria-hidden="true">axes1</figcaption>
+</figure>
+</dia-both>
+<dia-both>
+<h3 id="axes-ancestor">Axes ancestor</h3>
+<figure>
+<img src="images/diagramAxes02.svg" alt="solution" />
+<figcaption aria-hidden="true">solution</figcaption>
+</figure>
+</dia-both>
+<dia-both>
+<h3 id="axes-following-sibling-et-preceding-sibling">Axes
+following-sibling et preceding-sibling</h3>
+<figure>
+<img src="images/diagramAxes03.svg" alt="solution" />
+<figcaption aria-hidden="true">solution</figcaption>
+</figure>
+</dia-both>
+<dia-both>
+<h3 id="axe-following">Axe following</h3>
+<figure>
+<img src="images/diagramAxes04.svg" alt="solution" />
+<figcaption aria-hidden="true">solution</figcaption>
+</figure>
+</dia-both>
+<dia-both>
+<h2 id="prédicats">Prédicats</h2>
+<pre class="xpath"><code>div[child::lg]</code></pre>
+<pre class="xpath"><code>div[lg]</code></pre>
+<pre class="xpath"><code>div[1]</code></pre>
+<pre class="xpath"><code>div[p=&#39;test&#39;]</code></pre>
+</dia-both>
+<dia-both state="intertitre" bg="#1a1a2e">
+<h2 id="les-fonctions-xpath">Les Fonctions XPath</h2>
+</dia-both>
+<h2 id="fonctions-dans-des-expressions-xpath">Fonctions dans des
+expressions XPath</h2>
+<p>XPath propose également un certain nombre de fonctions prédéfinies
+qui permettent de manipuler des données à partir de noeuds ou de fournir
+des prédicats.</p>
+<p>Ces fonctions peuvent s’avérer très utiles pour manipuler des chaînes
+textuelles, vérifier la valeur d’une clef de travail ou son type, ou
+encore réaliser des calculs.</p>
+<dia-both>
+<p>Voici quelques unes des fonctions XPath communes :</p>
+<ul>
+<li><code>concat()</code> concaténation</li>
+</ul>
+<pre class="xpath"><code>concat(&#39;ligneN&#39;, l/@n)</code></pre>
+<ul>
+<li><code>normalize-space()</code> normaliser les espaces</li>
+</ul>
+<pre class="xpath"><code>normalize-space(//lg/l)</code></pre>
+<ul>
+<li><code>string()</code> valeur textuelle du nœud</li>
+</ul>
+<pre class="xpath"><code>string(/l[@n=&quot;2&quot;])</code></pre>
+<p>Liste complète des fonctions XPath dans la spécification XPath
+(http://www.w3.org/TR/xpath)</p>
+</dia-both>
+<p><code>concat()</code> Cette fonction permet de combiner un nombre
+quelconque de chaînes de caractères avec des données extraites de noeuds
+en respectant l’ordre dans lequel les paramètres sont spécifiés.</p>
+<p>On peut indiquer des chemins XPath en tant que paramètres. Les
+chaînes de caractères littérales sont fournies entre apostrophes.</p>
+<p>Par exemple :</p>
+<pre class="xpath"><code>concat(&#39;chaîneDeCaractères&#39;, {expressionXPath})</code></pre>
+<p><code>normalize-space()</code></p>
+<p>Permet d’enlever tous les espaces de début et de fin du paramètre
+d’entrée et de normaliser l’ensemble de l’espace dans l’entrée en
+caractères espace et sauts de ligne uniques. Par</p>
+<p>Exemple :</p>
+<pre class="xpath"><code>normalize-space(/Job/Address/Line1)</code></pre>
+<p><code>string()</code> Permet de convertir le paramètre en type de
+données chaîne. Cette fonction permet de s’assurer que des noeuds
+numériques ou de date sont traités en tant que chaînes. Par</p>
+<p>Exemple :</p>
+<pre class="xpath"><code>string(/PurchaseOrder/VendorID)</code></pre>
+<p><code>translate()</code></p>
+<p>Permet de remplacer des caractères par d’autres caractères dans le
+premier paramètre que vous spécifiez. Le deuxième paramètre est le ou
+les caractères à remplacer et le troisième paramètre correspond aux
+caractères de remplacement. Cette fonction peut s’avérer utile pour vous
+assurer que des clés de travail sont toutes en majuscules.</p>
+<p>Par exemple.</p>
+<pre class="xpath"><code>translate(/Issue/ShortDescr,
+    &#39;abcdefghijklmnopqrstuvwxyz&#39;,
+    &#39;ABCDEFGHIJKLMNOPQRSTUVWXYZ&#39;)</code></pre>
+<p>Vous trouverez la liste complète des fonctions XPath dans la
+spécification XPath (http://www.w3.org/TR/xpath).</p>
+<dia-both>
+<h2 id="autres-fonction-utiles">Autres fonction utiles</h2>
+<p>Voici d’autres fonctions XPath très utiles :</p>
+<ul>
+<li><code>false()</code>, <code>true()</code>, <code>not(arg)</code>
+booléennes</li>
+</ul>
+<pre class="xpath"><code>//l[not(@n=&quot;5&quot;)]</code></pre>
+<ul>
+<li><code>number(arg)</code>, <code>count(sequence)</code>,
+sum(sequence),…</li>
+</ul>
+<pre class="xpath"><code>count(//l)</code></pre>
+<ul>
+<li><code>position()</code></li>
+</ul>
+<pre class="xpath"><code>position(//l[@n=&quot;6&quot;])</code></pre>
+</dia-both>
+<dia-both>
+<h3 id="les-opérateurs">Les opérateurs</h3>
+<p>Les <strong>opérateurs</strong> <code>=</code>, <code>!=</code>,
+<code>&lt;</code>, <code>&gt;</code>, <code>&lt;=</code>,
+<code>&gt;=</code> peuvent être employées pour les types numériques,
+chaînes et boooléens.</p>
+<p>On dispose également des connecteurs logique <code>and</code>et
+<code>or</code>.</p>
+<p>Liste complète des fonctions XPath dans la spécification XPath
+(http://www.w3.org/TR/xpath)</p>
+</dia-both>
+<h3
+id="les-fonctions-booléennes-peuvent-vous-permettre-de-réaliser-des-tests-sur-des-arguments">les
+fonctions booléennes peuvent vous permettre de réaliser des tests sur
+des arguments</h3>
+<dia-both>
+<h3
+id="les-fonctions-numériques-peuvent-vous-permettre-des-réaliser-des-opérations-arithmétiques-sur-des-séquences-de-nœuds">Les
+fonctions numériques peuvent vous permettre des réaliser des opérations
+arithmétiques sur des séquences de nœuds</h3>
+<p><code>count()</code> Vous permet de compter le nombre de noeuds dans
+le paramètre que vous spécifiez. En règle générale, le paramètre est une
+expression de chemin XPath qui identifie plusieurs noeuds, par exemple,
+tous les noeuds Item qui sont des enfants de PODetail. Par exemple :
+count({expressionXPath})</p>
+</dia-both>
+<dia-both state="intertitre" bg="#1a1a2e">
+<h2 id="ressources">Ressources</h2>
+</dia-both>
+<dia-both>
+<h3 id="standards">Standards</h3>
+<p>Version 3.0 en 2014, 3.1 en 2017</p>
+<ul>
+<li><a href="http://www.w3.org/TR/xpath-datamodel-31/">XQuery and XPath
+Data Model 3.1</a></li>
+<li><a href="http://www.w3.org/TR/xpath-31/">XML Path Language (XPath
+3.1)</a></li>
+<li><a href="http://www.w3.org/TR/xpath-functions-31/">XPath and XQuery
+Functions and Operators 3.1</a></li>
+<li><a href="http://www.w3.org/TR/xslt-xquery-serialization-31/">XSLT
+and XQuery Serialization 3.1</a></li>
+</ul>
+<p>Version 2.0 le 23 janvier 2007</p>
+<ul>
+<li><a href="http://www.w3.org/TR/xpath20/">XML Path Language (XPath)
+2.0</a></li>
+<li><a href="http://www.w3.org/TR/xpath-datamodel/">XQuery 1.0 and XPath
+2.0 Data Model (XDM)</a></li>
+<li><a href="http://www.w3.org/TR/xslt20/">XSL Transformations (XSLT)
+Version 2.0</a>]</li>
+</ul>
+<p>Version 1.0 en 1999</p>
+</dia-both>
+<h2 id="notes">Notes</h2>
+<section id="footnotes" class="footnotes footnotes-end-of-document"
+role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1"><p><a href="http://www.w3.org/TR/xpath20/">XML Path
+Language (XPath) 2.0</a>, <a
+href="http://www.w3.org/TR/xpath-datamodel/">XQuery 1.0 and XPath 2.0
+Data Model (XDM)</a>, <a href="http://www.w3.org/TR/xslt20/">XSL
+Transformations (XSLT) Version 2.0</a>]<a href="#fnref1"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+                      </div>
+        </article>
+
+        <div class="page-layout__extra">Zone extra</div>
+      </main>
+
+      <footer>
+        <nav><a href="index.html">← Retour à l’index</a></nav>
+        <p>
+          CC-BY-NC –
+          <a href="https://orcid.org/0000-0003-4092-4569"
+            >Emmanuel Château-Dutier (Université de Montréal)</a
+          >
+        </p>
+      </footer>
+
+      <!-- Scripts -->
+      <script src="lib/reveal.js-6.0.1/dist/reveal.js"></script>
+      <script src="lib/reveal.js-6.0.1/dist/plugin/notes.js"></script>
+      <script src="lib/reveal.js-6.0.1/dist/plugin/highlight.js"></script>
+      <script src="scripts/dia-elements.js"></script>
+      <script src="scripts/diapositives.js"></script>
+      <script src="scripts/bibliography.js"></script>
+      <script src="scripts/reframe/reframe.js"></script>
+      <script src="scripts/livereload.js"></script>
+    </div>
+  </body>
+</html>

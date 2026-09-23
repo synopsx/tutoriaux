@@ -1,0 +1,21 @@
+/**
+ * Hypothesis — styles hôte
+ *
+ * Les styles du shadow DOM (#sidebar-container, sidebar-edge, boutons) sont
+ * injectés via adoptedStyleSheets dans hypothesis-config.js → injectIntoShadow().
+ * Les propriétés CSS custom définies ici sur :root traversent le shadow DOM
+ * et sont disponibles dans le CSS injecté.
+ */
+
+/* Largeur de la bande latérale (sidebar-edge).
+ * Doit correspondre au padding-inline de .page-layout__main. */
+:root {
+  --hy-edge-width: 0.75rem;
+}
+
+@media (min-width: 40rem) {
+  :root {
+    --hy-edge-width: calc(1.5rem + 1vw);
+  }
+}
+
